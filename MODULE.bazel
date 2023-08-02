@@ -28,7 +28,7 @@ npm.npm_import(
         """name = "pnpm",""",
         """entry_point = "package/dist/pnpm.cjs",""",
         """visibility = ["//visibility:public"],""",
-        """chdir = package_name(),""",
+        """chdir = "$$BUILD_WORKING_DIRECTORY",""",
         """)""",
     ]),
     #register_copy_directory_toolchains = False,  # this code path should work for both WORKSPACE and bzlmod
