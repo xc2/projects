@@ -1,2 +1,5 @@
 ## pnpm
-bazel run -- @pnpm//:pnpm --dir $PWD
+
+```shell
+bazel run -- @pnpm//:pnpm
+```

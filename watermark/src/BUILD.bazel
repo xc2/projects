@@ -1,0 +1,16 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+ts_project(
+    name = "src",
+    srcs = [
+        "App.tsx",
+        "main.tsx",
+        "vite-env.d.ts",
+    ],
+    deps = [
+        "//watermark:node_modules/@types/react",
+        "//watermark:node_modules/@types/react-dom",
+        "//watermark:node_modules/react",
+        "//watermark:node_modules/react-dom",
+    ],
+)
