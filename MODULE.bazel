@@ -58,7 +58,14 @@ npm.npm_translate_lock(
     verify_node_modules_ignored = "//:.bazelignore",
 )
 
-use_repo(npm, "npm")
+npm.npm_translate_lock(
+    name = "wrangler",
+    pnpm_lock = "//tools/wrangler:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+
+use_repo(npm, "npm", "wrangler")
 
 #pnpm = use_extension("@aspect_rules_js//npm:extensions.bzl", "pnpm", dev_dependency = True)
 
