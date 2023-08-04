@@ -1,12 +1,36 @@
-load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_config", "ts_project")
+load("@aspect_bazel_lib//lib:copy_to_bin.bzl", "copy_to_bin")
+load("@aspect_rules_js//js:defs.bzl", "js_library")
 
-ts_project(
+copy_to_bin(
+    name = "non_js",
+    srcs = glob([
+        "**/*.css",
+        "**/*.svg",
+    ]),
+)
+
+js_library(
     name = "src",
+    srcs = [":non_js"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":src_ts",
+    ],
+)
+
+# gazelle:js_project_naming_convention src_ts
+ts_project(
+    name = "src_ts",
     srcs = [
         "App.tsx",
         "main.tsx",
         "vite-env.d.ts",
     ],
+    incremental = True,
+    preserve_jsx = True,
+    resolve_json_module = True,
+    tsconfig = "//watermark:tsconfig",
     deps = [
         "//watermark:node_modules/@types/react",
         "//watermark:node_modules/@types/react-dom",

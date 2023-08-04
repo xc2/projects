@@ -1,10 +1,79 @@
-load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_config", "ts_project")
 load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@npm//watermark:vite/package_json.bzl", vite_bin = "bin")
+load("@aspect_rules_js//js:defs.bzl", "js_library", "js_run_devserver", "js_test")
 
 npm_link_all_packages(name = "node_modules")
 
+ts_config(
+    name = "tsconfig",
+    src = "tsconfig.ts.json",
+    visibility = [":__subpackages__"],
+)
+
+ts_config(
+    name = "vite-tsconfig",
+    src = "tsconfig.node.json",
+)
+
+# gazelle:js_project_naming_convention vite_config
 ts_project(
+    name = "vite-config",
+    srcs = ["vite.config.ts"],
+    composite = True,
+    tsconfig = ":vite-tsconfig",
+    deps = [
+        ":node_modules/@vitejs/plugin-react",
+        ":node_modules/vite",
+    ],
+)
+
+SRC = [
+    ":index.html",
+    "vite-config",
+    ":tsconfig",
+    "//watermark/src",
+]
+
+vite_bin.vite(
     name = "watermark",
+    srcs = SRC,
+    args = [
+        "build",
+        "-c",
+        "vite.config.js",
+        "--outDir",
+        "dist",
+    ],
+    chdir = package_name(),
+    out_dirs = ["dist"],
+)
+
+vite_bin.vite_binary(
+    name = "_vite",
+    chdir = package_name(),
+)
+
+js_run_devserver(
+    name = "dev",
+    args = [
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "3001",
+        "--open",
+        "false",
+        "-c",
+        "vite.config.js",
+        "--clearScreen",
+        "false",
+    ],
+    data = SRC,
+    tool = ":_vite",
+)
+
+ts_project(
+    name = "vite_config",
     srcs = ["vite.config.ts"],
     deps = [
         ":node_modules/@vitejs/plugin-react",

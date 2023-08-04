@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "prepare": "bazel run //:husky install"
+    "prepare": "bazel run //:husky install || true"
   },
   "dependencies": {
     "eslint": "^8.45.0",
