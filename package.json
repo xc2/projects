@@ -1,7 +1,18 @@
 {
+  "scripts": {
+    "prepare": "bazel run //:husky install"
+  },
   "dependencies": {
     "eslint": "^8.45.0",
     "prettier": "^3.0.1",
-    "pretty-quick": "^3.1.3"
+    "pretty-quick": "^3.1.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "bazel run -- //:prettier --write",
+      "bazel run -- //:eslint --cache"
+    ]
   }
 }
