@@ -2,26 +2,17 @@ load("@aspect_rules_ts//ts:defs.bzl", "ts_config", "ts_project")
 load("@aspect_bazel_lib//lib:copy_to_bin.bzl", "copy_to_bin")
 load("@aspect_rules_js//js:defs.bzl", "js_library")
 
-copy_to_bin(
-    name = "non_js",
+js_library(
+    name = "assets",
     srcs = glob([
         "**/*.css",
         "**/*.svg",
     ]),
 )
 
-js_library(
-    name = "src",
-    srcs = [":non_js"],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":src_ts",
-    ],
-)
-
-# gazelle:js_project_naming_convention src_ts
+# gazelle:js_project_naming_convention src
 ts_project(
-    name = "src_ts",
+    name = "src",
     srcs = [
         "App.tsx",
         "main.tsx",
@@ -31,7 +22,10 @@ ts_project(
     preserve_jsx = True,
     resolve_json_module = True,
     tsconfig = "//watermark:tsconfig",
+    validate = False,
+    visibility = ["//visibility:public"],
     deps = [
+        ":assets",
         "//watermark:node_modules/@types/react",
         "//watermark:node_modules/@types/react-dom",
         "//watermark:node_modules/react",

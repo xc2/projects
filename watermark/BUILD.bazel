@@ -16,7 +16,7 @@ ts_config(
     src = "tsconfig.node.json",
 )
 
-# gazelle:js_project_naming_convention vite_config
+# gazelle:js_project_naming_convention vite-config
 ts_project(
     name = "vite-config",
     srcs = ["vite.config.ts"],
@@ -70,13 +70,4 @@ js_run_devserver(
     ],
     data = SRC,
     tool = ":_vite",
-)
-
-ts_project(
-    name = "vite_config",
-    srcs = ["vite.config.ts"],
-    deps = [
-        ":node_modules/@vitejs/plugin-react",
-        ":node_modules/vite",
-    ],
 )
