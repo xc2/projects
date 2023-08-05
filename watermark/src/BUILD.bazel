@@ -1,6 +1,8 @@
 load("@aspect_rules_ts//ts:defs.bzl", "ts_config", "ts_project")
 load("@aspect_bazel_lib//lib:copy_to_bin.bzl", "copy_to_bin")
 load("@aspect_rules_js//js:defs.bzl", "js_library")
+load("@aspect_rules_swc//swc:defs.bzl", "swc")
+load("@bazel_skylib//lib:partial.bzl", "partial")
 
 js_library(
     name = "assets",
@@ -18,9 +20,14 @@ ts_project(
         "main.tsx",
         "vite-env.d.ts",
     ],
+    declaration = True,
     incremental = True,
     preserve_jsx = True,
     resolve_json_module = True,
+    transpiler = partial.make(
+        swc,
+        swcrc = "//watermark:.swcrc",
+    ),
     tsconfig = "//watermark:tsconfig",
     validate = False,
     visibility = ["//visibility:public"],

@@ -27,14 +27,15 @@ def use_npm_package_bin(name, version, integrity, entry_point, package = None, r
     )
     npm_repos.append(name)
 
-def use_node_modules(name, package = None, pnpm_lock = None, **kwargs):
+def use_node_modules(name, package = None, npmrc = None, pnpm_lock = None, **kwargs):
     npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
 
     package = package or "//"
     pnpm_lock = pnpm_lock or "{}:pnpm-lock.yaml".format(package)
+    npmrc = npmrc or "//:.npmrc"
     npm.npm_translate_lock(
         name = name,
-        npmrc = "//:.npmrc",
+        npmrc = npmrc,
         verify_node_modules_ignored = "//:.bazelignore",
         pnpm_lock = pnpm_lock,
         **kwargs
