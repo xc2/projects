@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-bazel run -- //:lint-staged
+bazel run -- //tools/lint:lint-staged

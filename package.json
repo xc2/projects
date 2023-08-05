@@ -1,13 +1,10 @@
 {
   "scripts": {
-    "prepare": "bazel run //:husky install || true"
+    "prepare": "bazel run //tools/lint:husky install || true"
   },
   "dependencies": {
     "eslint": "^8.45.0",
-    "prettier": "^3.0.1",
-    "pretty-quick": "^3.1.3",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.3"
+    "prettier": "^3.0.1"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
