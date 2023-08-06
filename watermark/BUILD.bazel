@@ -22,28 +22,41 @@ ts_config(
     src = "tsconfig.node.json",
 )
 
-# gazelle:js_project_naming_convention vite-config
+# gazelle:js_project_naming_convention bundle-configs
 ts_project(
-    name = "vite-config",
-    srcs = ["vite.config.ts"],
+    name = "bundle-configs",
+    srcs = [
+        "postcss.config.ts",
+        "tailwind.config.ts",
+        "vite.config.ts",
+    ],
     composite = True,
     tsconfig = ":vite-tsconfig",
     deps = [
         ":node_modules/@types/node",
+        ":node_modules/@vitejs/plugin-react",
+        ":node_modules/tailwindcss",
+        ":node_modules/tailwindcss-animate",
         ":node_modules/vite",
     ],
 )
 
 SRC = [
     ":index.html",
-    "vite-config",
-    ":tsconfig",
     "//watermark/src",
+]
+
+VITE_DEPS = [
+    ":tsconfig",
+    "bundle-configs",
+    ":node_modules/tailwindcss",
+    ":node_modules/postcss",
+    ":node_modules/autoprefixer",
 ]
 
 vite_bin.vite(
     name = "watermark",
-    srcs = SRC,
+    srcs = SRC + VITE_DEPS,
     args = [
         "build",
         "-c",
@@ -74,7 +87,7 @@ js_run_devserver(
         "--clearScreen",
         "false",
     ],
-    data = SRC,
+    data = SRC + VITE_DEPS,
     tool = ":_vite",
 )
 

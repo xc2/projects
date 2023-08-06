@@ -6369,7 +6369,7 @@
         "npm__tailwind-merge__1.14.0__links": {
           "bzlFile": "@@aspect_rules_js~1.30.0//npm/private:npm_import.bzl",
           "ruleClassName": "npm_import_links",
-          "attributes": {"name":"--aspect_rules_js~1.30.0~npm~npm__tailwind-merge__1.14.0__links","package":"--tailwind-merge","version":"--1.14.0","dev":true,"root_package":"--","link_packages":{"--watermark":["--tailwind-merge"]},"deps":{},"transitive_closure":{"--tailwind-merge":["--1.14.0"]},"lifecycle_build_target":false,"lifecycle_hooks_env":[],"lifecycle_hooks_execution_requirements":[],"bins":{},"npm_translate_lock_repo":"--npm"}
+          "attributes": {"name":"--aspect_rules_js~1.30.0~npm~npm__tailwind-merge__1.14.0__links","package":"--tailwind-merge","version":"--1.14.0","dev":false,"root_package":"--","link_packages":{"--watermark":["--tailwind-merge"]},"deps":{},"transitive_closure":{"--tailwind-merge":["--1.14.0"]},"lifecycle_build_target":false,"lifecycle_hooks_env":[],"lifecycle_hooks_execution_requirements":[],"bins":{},"npm_translate_lock_repo":"--npm"}
         },
         "wrangler__semver__7.5.4__links": {
           "bzlFile": "@@aspect_rules_js~1.30.0//npm/private:npm_import.bzl",
@@ -7813,13 +7813,123 @@
         }
       }
     },
-    "@bazel_tools//tools/sh:sh_configure.bzl%sh_configure_extension": {
-      "bzlTransitiveDigest": "hp4NgmNjEg5+xgvzfh6L83bt9/aiiWETuNpwNuF1MSU=",
+    "@aspect_rules_swc~1.0.2//swc:extensions.bzl%swc": {
+      "bzlTransitiveDigest": "1LorQ+hgBE6xmphMsYf0fEOcBRnYvdNKFCXwMO96zeU=",
       "generatedRepoSpecs": {
-        "local_config_sh": {
-          "bzlFile": "@@bazel_tools//tools/sh:sh_configure.bzl",
-          "ruleClassName": "sh_config",
-          "attributes": {"name":"--bazel_tools~sh_configure_extension~local_config_sh"}
+        "swc_linux-arm64-gnu": {
+          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
+          "ruleClassName": "swc_repositories",
+          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_linux-arm64-gnu","platform":"--linux-arm64-gnu","swc_version":"--v1.3.42","swc_version_from":null}
+        },
+        "swc_win32-ia32-msvc": {
+          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
+          "ruleClassName": "swc_repositories",
+          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_win32-ia32-msvc","platform":"--win32-ia32-msvc","swc_version":"--v1.3.42","swc_version_from":null}
+        },
+        "swc_toolchains": {
+          "bzlFile": "@@aspect_rules_swc~1.0.2//swc/private:toolchains_repo.bzl",
+          "ruleClassName": "toolchains_repo",
+          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_toolchains","user_repository_name":"--swc"}
+        },
+        "swc_win32-arm64-msvc": {
+          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
+          "ruleClassName": "swc_repositories",
+          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_win32-arm64-msvc","platform":"--win32-arm64-msvc","swc_version":"--v1.3.42","swc_version_from":null}
+        },
+        "swc_darwin-x64": {
+          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
+          "ruleClassName": "swc_repositories",
+          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_darwin-x64","platform":"--darwin-x64","swc_version":"--v1.3.42","swc_version_from":null}
+        },
+        "swc_linux-x64-gnu": {
+          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
+          "ruleClassName": "swc_repositories",
+          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_linux-x64-gnu","platform":"--linux-x64-gnu","swc_version":"--v1.3.42","swc_version_from":null}
+        },
+        "swc_win32-x64-msvc": {
+          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
+          "ruleClassName": "swc_repositories",
+          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_win32-x64-msvc","platform":"--win32-x64-msvc","swc_version":"--v1.3.42","swc_version_from":null}
+        },
+        "swc_darwin-arm64": {
+          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
+          "ruleClassName": "swc_repositories",
+          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_darwin-arm64","platform":"--darwin-arm64","swc_version":"--v1.3.42","swc_version_from":null}
+        }
+      }
+    },
+    "@rules_nodejs~6.0.0//nodejs:extensions.bzl%node": {
+      "bzlTransitiveDigest": "Wslpao3Y60MFI0AyspfqaHozIG3oCntNOE+eKyOsSJQ=",
+      "generatedRepoSpecs": {
+        "nodejs_host": {
+          "bzlFile": "@@rules_nodejs~6.0.0//nodejs/private:nodejs_repo_host_os_alias.bzl",
+          "ruleClassName": "nodejs_repo_host_os_alias",
+          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_host","user_node_repository_name":"--nodejs"}
+        },
+        "nodejs_linux_s390x": {
+          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
+          "ruleClassName": "node_repositories",
+          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_linux_s390x","platform":"--linux_s390x","node_version":"--18.16.1"}
+        },
+        "nodejs_windows_amd64": {
+          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
+          "ruleClassName": "node_repositories",
+          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_windows_amd64","platform":"--windows_amd64","node_version":"--18.16.1"}
+        },
+        "nodejs_toolchains": {
+          "bzlFile": "@@rules_nodejs~6.0.0//nodejs/private:toolchains_repo.bzl",
+          "ruleClassName": "toolchains_repo",
+          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_toolchains","user_node_repository_name":"--nodejs"}
+        },
+        "nodejs_linux_amd64": {
+          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
+          "ruleClassName": "node_repositories",
+          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_linux_amd64","platform":"--linux_amd64","node_version":"--18.16.1"}
+        },
+        "nodejs_linux_ppc64le": {
+          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
+          "ruleClassName": "node_repositories",
+          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_linux_ppc64le","platform":"--linux_ppc64le","node_version":"--18.16.1"}
+        },
+        "nodejs_darwin_amd64": {
+          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
+          "ruleClassName": "node_repositories",
+          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_darwin_amd64","platform":"--darwin_amd64","node_version":"--18.16.1"}
+        },
+        "nodejs_linux_arm64": {
+          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
+          "ruleClassName": "node_repositories",
+          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_linux_arm64","platform":"--linux_arm64","node_version":"--18.16.1"}
+        },
+        "nodejs": {
+          "bzlFile": "@@rules_nodejs~6.0.0//nodejs/private:nodejs_repo_host_os_alias.bzl",
+          "ruleClassName": "nodejs_repo_host_os_alias",
+          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs","user_node_repository_name":"--nodejs"}
+        },
+        "nodejs_darwin_arm64": {
+          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
+          "ruleClassName": "node_repositories",
+          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_darwin_arm64","platform":"--darwin_arm64","node_version":"--18.16.1"}
+        }
+      }
+    },
+    "@rules_cc~0.0.2//cc:extensions.bzl%cc_configure": {
+      "bzlTransitiveDigest": "MxlRT9mERSSlHP4U9xvwnAp8XZNE0WlEE1QudRdeQog=",
+      "generatedRepoSpecs": {
+        "local_config_cc": {
+          "bzlFile": "@@rules_cc~0.0.2//cc/private/toolchain:cc_configure.bzl",
+          "ruleClassName": "cc_autoconf",
+          "attributes": {"name":"--rules_cc~0.0.2~cc_configure~local_config_cc"}
+        },
+        "local_config_cc_toolchains": {
+          "bzlFile": "@@rules_cc~0.0.2//cc/private/toolchain:cc_configure.bzl",
+          "ruleClassName": "cc_autoconf_toolchains",
+          "attributes": {"name":"--rules_cc~0.0.2~cc_configure~local_config_cc_toolchains"}
+        },
+        "local_config_xcode": {
+          "bzlFile": "@@bazel_tools//tools/osx:xcode_configure.bzl",
+          "ruleClassName": "xcode_autoconf",
+          "attributes": {"name":"--rules_cc~0.0.2~cc_configure~local_config_xcode","xcode_locator":"--@bazel_tools//tools/osx:xcode_locator.m","remote_xcode":"--"}
         }
       }
     },
@@ -8023,123 +8133,13 @@
         }
       }
     },
-    "@aspect_rules_swc~1.0.2//swc:extensions.bzl%swc": {
-      "bzlTransitiveDigest": "1LorQ+hgBE6xmphMsYf0fEOcBRnYvdNKFCXwMO96zeU=",
+    "@bazel_tools//tools/sh:sh_configure.bzl%sh_configure_extension": {
+      "bzlTransitiveDigest": "hp4NgmNjEg5+xgvzfh6L83bt9/aiiWETuNpwNuF1MSU=",
       "generatedRepoSpecs": {
-        "swc_linux-arm64-gnu": {
-          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
-          "ruleClassName": "swc_repositories",
-          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_linux-arm64-gnu","platform":"--linux-arm64-gnu","swc_version":"--v1.3.42","swc_version_from":null}
-        },
-        "swc_win32-ia32-msvc": {
-          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
-          "ruleClassName": "swc_repositories",
-          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_win32-ia32-msvc","platform":"--win32-ia32-msvc","swc_version":"--v1.3.42","swc_version_from":null}
-        },
-        "swc_toolchains": {
-          "bzlFile": "@@aspect_rules_swc~1.0.2//swc/private:toolchains_repo.bzl",
-          "ruleClassName": "toolchains_repo",
-          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_toolchains","user_repository_name":"--swc"}
-        },
-        "swc_win32-arm64-msvc": {
-          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
-          "ruleClassName": "swc_repositories",
-          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_win32-arm64-msvc","platform":"--win32-arm64-msvc","swc_version":"--v1.3.42","swc_version_from":null}
-        },
-        "swc_darwin-x64": {
-          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
-          "ruleClassName": "swc_repositories",
-          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_darwin-x64","platform":"--darwin-x64","swc_version":"--v1.3.42","swc_version_from":null}
-        },
-        "swc_linux-x64-gnu": {
-          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
-          "ruleClassName": "swc_repositories",
-          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_linux-x64-gnu","platform":"--linux-x64-gnu","swc_version":"--v1.3.42","swc_version_from":null}
-        },
-        "swc_win32-x64-msvc": {
-          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
-          "ruleClassName": "swc_repositories",
-          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_win32-x64-msvc","platform":"--win32-x64-msvc","swc_version":"--v1.3.42","swc_version_from":null}
-        },
-        "swc_darwin-arm64": {
-          "bzlFile": "@@aspect_rules_swc~1.0.2//swc:repositories.bzl",
-          "ruleClassName": "swc_repositories",
-          "attributes": {"name":"--aspect_rules_swc~1.0.2~swc~swc_darwin-arm64","platform":"--darwin-arm64","swc_version":"--v1.3.42","swc_version_from":null}
-        }
-      }
-    },
-    "@rules_nodejs~6.0.0//nodejs:extensions.bzl%node": {
-      "bzlTransitiveDigest": "Wslpao3Y60MFI0AyspfqaHozIG3oCntNOE+eKyOsSJQ=",
-      "generatedRepoSpecs": {
-        "nodejs_host": {
-          "bzlFile": "@@rules_nodejs~6.0.0//nodejs/private:nodejs_repo_host_os_alias.bzl",
-          "ruleClassName": "nodejs_repo_host_os_alias",
-          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_host","user_node_repository_name":"--nodejs"}
-        },
-        "nodejs_linux_s390x": {
-          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
-          "ruleClassName": "node_repositories",
-          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_linux_s390x","platform":"--linux_s390x","node_version":"--18.16.1"}
-        },
-        "nodejs_windows_amd64": {
-          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
-          "ruleClassName": "node_repositories",
-          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_windows_amd64","platform":"--windows_amd64","node_version":"--18.16.1"}
-        },
-        "nodejs_toolchains": {
-          "bzlFile": "@@rules_nodejs~6.0.0//nodejs/private:toolchains_repo.bzl",
-          "ruleClassName": "toolchains_repo",
-          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_toolchains","user_node_repository_name":"--nodejs"}
-        },
-        "nodejs_linux_amd64": {
-          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
-          "ruleClassName": "node_repositories",
-          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_linux_amd64","platform":"--linux_amd64","node_version":"--18.16.1"}
-        },
-        "nodejs_linux_ppc64le": {
-          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
-          "ruleClassName": "node_repositories",
-          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_linux_ppc64le","platform":"--linux_ppc64le","node_version":"--18.16.1"}
-        },
-        "nodejs_darwin_amd64": {
-          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
-          "ruleClassName": "node_repositories",
-          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_darwin_amd64","platform":"--darwin_amd64","node_version":"--18.16.1"}
-        },
-        "nodejs_linux_arm64": {
-          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
-          "ruleClassName": "node_repositories",
-          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_linux_arm64","platform":"--linux_arm64","node_version":"--18.16.1"}
-        },
-        "nodejs": {
-          "bzlFile": "@@rules_nodejs~6.0.0//nodejs/private:nodejs_repo_host_os_alias.bzl",
-          "ruleClassName": "nodejs_repo_host_os_alias",
-          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs","user_node_repository_name":"--nodejs"}
-        },
-        "nodejs_darwin_arm64": {
-          "bzlFile": "@@rules_nodejs~6.0.0//nodejs:repositories.bzl",
-          "ruleClassName": "node_repositories",
-          "attributes": {"name":"--rules_nodejs~6.0.0~node~nodejs_darwin_arm64","platform":"--darwin_arm64","node_version":"--18.16.1"}
-        }
-      }
-    },
-    "@rules_cc~0.0.2//cc:extensions.bzl%cc_configure": {
-      "bzlTransitiveDigest": "MxlRT9mERSSlHP4U9xvwnAp8XZNE0WlEE1QudRdeQog=",
-      "generatedRepoSpecs": {
-        "local_config_cc": {
-          "bzlFile": "@@rules_cc~0.0.2//cc/private/toolchain:cc_configure.bzl",
-          "ruleClassName": "cc_autoconf",
-          "attributes": {"name":"--rules_cc~0.0.2~cc_configure~local_config_cc"}
-        },
-        "local_config_cc_toolchains": {
-          "bzlFile": "@@rules_cc~0.0.2//cc/private/toolchain:cc_configure.bzl",
-          "ruleClassName": "cc_autoconf_toolchains",
-          "attributes": {"name":"--rules_cc~0.0.2~cc_configure~local_config_cc_toolchains"}
-        },
-        "local_config_xcode": {
-          "bzlFile": "@@bazel_tools//tools/osx:xcode_configure.bzl",
-          "ruleClassName": "xcode_autoconf",
-          "attributes": {"name":"--rules_cc~0.0.2~cc_configure~local_config_xcode","xcode_locator":"--@bazel_tools//tools/osx:xcode_locator.m","remote_xcode":"--"}
+        "local_config_sh": {
+          "bzlFile": "@@bazel_tools//tools/sh:sh_configure.bzl",
+          "ruleClassName": "sh_config",
+          "attributes": {"name":"--bazel_tools~sh_configure_extension~local_config_sh"}
         }
       }
     },

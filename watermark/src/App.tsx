@@ -1,15 +1,7 @@
-import "./App.css";
-import { Button } from "src/components/ui/button";
-
-function App() {
+export function App() {
   return (
-    <>
-      <h1>Hello world!</h1>
-      <div className="card">
-        <Button>hello</Button>
-      </div>
-    </>
+    <div className="">
+      <div className="pl-3 pr-3 pt-2 pb-2">a</div>
+    </div>
   );
 }
-
-export default App;
