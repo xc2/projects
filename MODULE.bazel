@@ -71,6 +71,7 @@ use_npm_package_bin(
 use_node_modules(name = "npm")
 use_node_modules(name = "wrangler", package = "//tools/wrangler")
 use_node_modules(name = "lint", package = "//tools/lint")
+use_node_modules(name = "shadcn", package = "//tools/shadcn")
 
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
 use_repo(npm, *npm_repos)

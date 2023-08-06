@@ -5,3 +5,4 @@ node_modules
 watermark/node_modules
 tools/wrangler/node_modules
 tools/lint/node_modules
+tools/shadcn/node_modules

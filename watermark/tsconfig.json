@@ -1,10 +1,10 @@
 {
   "extends": "./tsconfig.ts.json",
   "compilerOptions": {
-//    "moduleResolution": "bundler",
+    //    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   },
-
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

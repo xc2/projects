@@ -4,6 +4,8 @@ load("@aspect_rules_js//js:defs.bzl", "js_library")
 load("@aspect_rules_swc//swc:defs.bzl", "swc")
 load("@bazel_skylib//lib:partial.bzl", "partial")
 
+# gazelle:js_generation_mode none
+
 js_library(
     name = "assets",
     srcs = glob([
@@ -17,6 +19,8 @@ ts_project(
     name = "src",
     srcs = [
         "App.tsx",
+        "components/ui/button.tsx",
+        "lib/utils.ts",
         "main.tsx",
         "vite-env.d.ts",
     ],
@@ -33,9 +37,13 @@ ts_project(
     visibility = ["//visibility:public"],
     deps = [
         ":assets",
+        "//watermark:node_modules/@radix-ui/react-slot",
         "//watermark:node_modules/@types/react",
         "//watermark:node_modules/@types/react-dom",
+        "//watermark:node_modules/class-variance-authority",
+        "//watermark:node_modules/clsx",
         "//watermark:node_modules/react",
         "//watermark:node_modules/react-dom",
+        "//watermark:node_modules/tailwind-merge",
     ],
 )

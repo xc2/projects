@@ -8,8 +8,10 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "bazel run -- //:prettier --write",
-      "bazel run -- //:eslint --cache"
+      "bazel run -- //:prettier --write"
+    ],
+    "*.{json,prettierrc,swcrc,eslintrc}": [
+      "bazel run -- //:prettier --write"
     ]
   }
 }

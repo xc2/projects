@@ -3,7 +3,10 @@
   "jsc": {
     "parser": {
       "syntax": "typescript"
-    },"transform": {
+    },
+    "baseUrl": ".",
+    "paths": {},
+    "transform": {
       "react": {
         "runtime": "automatic"
       }

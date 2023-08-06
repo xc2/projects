@@ -14,6 +14,10 @@
     "noFallthroughCasesInSwitch": true,
     "incremental": true,
     "declaration": true,
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"]
+    }
   },
-  "include": ["src"],
+  "include": ["src"]
 }

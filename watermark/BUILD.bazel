@@ -28,7 +28,10 @@ ts_project(
     srcs = ["vite.config.ts"],
     composite = True,
     tsconfig = ":vite-tsconfig",
-    deps = [":node_modules/vite"],
+    deps = [
+        ":node_modules/@types/node",
+        ":node_modules/vite",
+    ],
 )
 
 SRC = [
