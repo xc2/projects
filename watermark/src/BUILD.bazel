@@ -19,7 +19,12 @@ ts_project(
     name = "src",
     srcs = [
         "App.tsx",
+        "components/canvas-pool/canvas-pool.tsx",
+        "components/canvas-pool/index.ts",
         "components/ui/button.tsx",
+        "components/upload/index.ts",
+        "components/upload/upload.tsx",
+        "lib/use-image-element.ts",
         "lib/utils.ts",
         "main.tsx",
         "vite-env.d.ts",
@@ -45,6 +50,7 @@ ts_project(
         "//watermark:node_modules/clsx",
         "//watermark:node_modules/react",
         "//watermark:node_modules/react-dom",
+        "//watermark:node_modules/swr",
         "//watermark:node_modules/tailwind-merge",
     ],
 )
