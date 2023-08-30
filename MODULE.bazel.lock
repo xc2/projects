@@ -9092,6 +9092,16 @@
           "attributes": {"name":"--rules_java~5.5.0~toolchains~remotejdk11_macos_aarch64","build_file":"@@rules_java~5.5.0//toolchains:jdk.BUILD","sha256":"--6bb0d2c6e8a29dcd9c577bbb2986352ba12481a9549ac2c0bcfd00ed60e538d2","strip_prefix":"--zulu11.56.19-ca-jdk11.0.15-macosx_aarch64","urls":["--https://mirror.bazel.build/cdn.azul.com/zulu/bin/zulu11.56.19-ca-jdk11.0.15-macosx_aarch64.tar.gz","--https://cdn.azul.com/zulu/bin/zulu11.56.19-ca-jdk11.0.15-macosx_aarch64.tar.gz"]}
         }
       }
+    },
+    "@bazel_tools//tools/osx:xcode_configure.bzl%xcode_configure_extension": {
+      "bzlTransitiveDigest": "OmamqKJsiE8WH/LST0ioVROxC7R/MdakCNW9DSPS5/U=",
+      "generatedRepoSpecs": {
+        "local_config_xcode": {
+          "bzlFile": "@@bazel_tools//tools/osx:xcode_configure.bzl",
+          "ruleClassName": "xcode_autoconf",
+          "attributes": {"name":"--bazel_tools~xcode_configure_extension~local_config_xcode","xcode_locator":"--@bazel_tools//tools/osx:xcode_locator.m","remote_xcode":"--"}
+        }
+      }
     }
   }
 }

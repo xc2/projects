@@ -24,6 +24,7 @@ ts_project(
         "components/ui/button.tsx",
         "components/upload/index.ts",
         "components/upload/upload.tsx",
+        "lib/canvas.ts",
         "lib/use-image-element.ts",
         "lib/utils.ts",
         "main.tsx",
