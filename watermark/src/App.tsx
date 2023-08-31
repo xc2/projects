@@ -8,8 +8,16 @@ import { fillText, getCanvasRect, getFontSize } from "./lib/canvas";
 export function App() {
   const [currentFile, setCurrentFile] = useState<File>();
   const { canvas, renderCanvasElements } = useCanvasPool();
+
   const { data: img } = useImageElement(currentFile);
   const [text, setText] = useState("仅限 XXX 做啥使用，它用无效");
+  const [resultImage, setResultImage] = useState<string | null>(null);
+  useEffect(() => {
+    if (!resultImage) {
+      return;
+    }
+    return URL.revokeObjectURL.bind(URL, resultImage);
+  }, [resultImage]);
 
   useEffect(() => {
     if (!img || !canvas) {
@@ -17,33 +25,47 @@ export function App() {
     }
     const imageWidth = img.naturalWidth || img.width;
     const imageHeight = img.naturalHeight || img.height;
-    const angle = (30 * Math.PI) / 180;
-    const rotated = getCanvasRect(imageWidth, imageHeight, angle);
+    const radians = (-30 * Math.PI) / 180;
 
-    console.log(1, rotated);
-    canvas.width = rotated.right - rotated.left;
-    canvas.height = rotated.descent - rotated.ascent;
-    const ctx = canvas.getContext("2d");
-
-    if (!ctx) {
-      return;
-    }
-    ctx.save();
-
-    console.log(999, 0 - rotated.left, 0 - rotated.ascent);
-
-    ctx.translate(0 - rotated.left, 0 - rotated.ascent);
-    ctx.rotate(angle);
+    canvas.width = imageWidth;
+    canvas.height = imageHeight;
+    const ctx = canvas.getContext("2d")!;
     ctx.drawImage(img, 0, 0);
-    ctx.restore();
-
-    const font = "sans-serif";
 
     ctx.textBaseline = "top";
-    ctx.font = `${getFontSize(ctx, font, text)}px ${font}`;
-    ctx.fillStyle = "rgba(0,0,0,1)";
+    ctx.fillStyle = "rgba(0, 0, 0, .2)";
 
-    fillText(ctx, text);
+    const font = "sans-serif";
+    const fontSize = getFontSize(
+      ctx,
+      font,
+      text,
+      "height",
+      (40 / 1000) * canvas.width,
+    );
+    ctx.font = `${fontSize}px ${font}`;
+    const rotated = getCanvasRect(imageWidth, imageHeight, radians);
+    ctx.save();
+    ctx.translate(...rotated.translate);
+    ctx.rotate(radians);
+    fillText(
+      ctx,
+      text,
+      [2, 3],
+      rotated.translate[0] * -1,
+      rotated.translate[1] * -1,
+      rotated.right - rotated.left,
+      rotated.descent - rotated.ascent,
+    );
+    ctx.restore();
+    canvas.toBlob(
+      (blob) => {
+        const url = blob && URL.createObjectURL(blob);
+        setResultImage(url);
+      },
+      "image/png",
+      1,
+    );
   }, [img, canvas]);
   return (
     <div className="flex-row space-y-3">
@@ -64,7 +86,9 @@ export function App() {
             <Upload {...props} onChange={(file) => setCurrentFile(file)} />
           )}
         </Field>
-        {renderCanvasElements()}
+        {/*{textPool.renderCanvasElements({ style: { display: "none" } })}*/}
+        {renderCanvasElements({ style: { display: "none" } })}
+        {!resultImage || <img src={resultImage} style={{ width: "700px" }} />}
       </div>
     </div>
   );
