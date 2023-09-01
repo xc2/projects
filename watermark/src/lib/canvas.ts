@@ -142,11 +142,22 @@ export function fillText(
         break;
       }
 
-      ctx.fillText(
-        text,
-        j % 2 ? x - xOffset : x + xOffset,
-        i % 2 ? y - yOffset : y + yOffset,
-      );
+      const fillX = j % 2 ? x - xOffset : x + xOffset,
+        fillY = i % 2 ? y - yOffset : y + yOffset;
+
+      ctx.fillText(text, fillX, fillY);
     }
   }
+}
+
+function getAvgBrightness(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+) {
+  const imageData = ctx.getImageData(x, y, w, h);
+  const total = imageData.data.reduce((total, curr) => total + curr, 0);
+  return total / imageData.data.length;
 }

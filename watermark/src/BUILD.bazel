@@ -24,6 +24,7 @@ ts_project(
         "components/upload/index.ts",
         "components/upload/upload.tsx",
         "lib/canvas.ts",
+        "lib/constants.ts",
         "lib/use-image-element.ts",
         "main.tsx",
         "vite-env.d.ts",
