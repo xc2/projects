@@ -26,3 +26,11 @@ run:debug -- --node_options=--inspect-brk
 #
 # Docs: https://bazel.build/reference/command-line-reference#flag--enable_runfiles
 build --enable_runfiles
+
+build --@aspect_rules_ts//ts:skipLibCheck=always
+fetch --@aspect_rules_ts//ts:skipLibCheck=always
+query --@aspect_rules_ts//ts:skipLibCheck=always
+
+build --@aspect_rules_ts//ts:default_to_tsc_transpiler
+fetch --@aspect_rules_ts//ts:default_to_tsc_transpiler
+query --@aspect_rules_ts//ts:default_to_tsc_transpiler

@@ -1,31 +1,31 @@
-import {
-  Field,
-  Input,
-  Option,
-  Select,
-  Slider,
-} from "@fluentui/react-components";
+import { Field, Input, Select, Slider } from "@fluentui/react-components";
+import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { Upload } from "./components/upload";
 import { useCanvasPool } from "./components/canvas-pool";
 import { useImageElement } from "./lib/use-image-element";
 import { fillText, getCanvasRect, getFontSize } from "./lib/canvas";
-import {
-  COMPOSITES,
-  DEFAULT_COMPOSITE,
-  DEFAULT_OPACITY,
-} from "./lib/constants";
+import { COMPOSITES, DEFAULT_APP_CONFIG } from "./lib/constants";
+import { createFieldComponent } from "./components/form";
+import { AppConfig } from "./lib/config";
 
 export function App() {
+  const form = useForm<AppConfig>({
+    defaultValues: DEFAULT_APP_CONFIG,
+  });
+
+  const HookField = createFieldComponent<AppConfig>();
+
+  const text = form.watch("processing.watermark.text");
+  const composite = form.watch("processing.watermark.composite");
+  const opacity = form.watch("processing.watermark.opacity");
   const [currentFile, setCurrentFile] = useState<File>();
   const { canvas, renderCanvasElements } = useCanvasPool();
 
-  const [composite, setComposite] =
-    useState<GlobalCompositeOperation>(DEFAULT_COMPOSITE);
   const { data: img } = useImageElement(currentFile);
-  const [opacity, setOpacity] = useState<number>(DEFAULT_OPACITY);
-  const [text, setText] = useState("仅限 XXX 做啥使用，它用无效");
+
   const [resultImage, setResultImage] = useState<string | null>(null);
+
   useEffect(() => {
     if (!resultImage) {
       return;
@@ -85,56 +85,49 @@ export function App() {
       "image/png",
       1,
     );
-  }, [img, canvas, composite, opacity]);
+  }, [img, canvas, composite, opacity, text]);
   return (
-    <div className="flex flex-col space-y-3">
-      <h1 className="text-2xl pl-3 pr-3 pt-6">Make watermark</h1>
+    <FormProvider {...form}>
+      <div className="flex flex-col space-y-3">
+        <h1 className="text-2xl pl-3 pr-3 pt-6">Make watermark</h1>
 
-      <div className="flex pl-3 pr-3 items-start">
-        <div className="basis-1/4 sticky top-0">
-          <Field>
-            {(props) => (
-              <Upload {...props} onChange={(file) => setCurrentFile(file)} />
+        <div className="flex pl-3 pr-3 items-start space-x-2">
+          <div className="basis-1/4 sticky top-0 space-y-3">
+            <Field>
+              {(props) => (
+                <Upload {...props} onChange={(file) => setCurrentFile(file)} />
+              )}
+            </Field>
+
+            <HookField name="processing.watermark.text">
+              {(props) => <Input type="text" {...props} />}
+            </HookField>
+            <HookField name="processing.watermark.opacity">
+              {(props) => <Slider min={0} max={1} step={0.05} {...props} />}
+            </HookField>
+
+            <HookField name="processing.watermark.composite" label="Composite">
+              {(props) => (
+                <Select {...props}>
+                  {COMPOSITES.map((c) => (
+                    <option key={c}>{c}</option>
+                  ))}
+                </Select>
+              )}
+            </HookField>
+          </div>
+          <div className="flex-auto min-w-0">
+            {renderCanvasElements({ style: { display: "block" } })}
+            {!resultImage || (
+              <img
+                alt="result"
+                src={resultImage}
+                style={{ maxWidth: "100%" }}
+              />
             )}
-          </Field>
-
-          <Field>
-            <Input
-              type="text"
-              value={text}
-              onChange={(e) => setText(e.currentTarget.value)}
-            />
-          </Field>
-          <Field>
-            <Slider
-              value={opacity}
-              min={0}
-              max={1}
-              step={0.05}
-              onChange={(_, data) => setOpacity(data.value)}
-            />
-          </Field>
-
-          <Field label="Composite">
-            <Select
-              value={composite}
-              onChange={(_, { value }) =>
-                setComposite(value as GlobalCompositeOperation)
-              }
-            >
-              {COMPOSITES.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-            </Select>
-          </Field>
-        </div>
-        <div className="flex-auto min-w-0">
-          {renderCanvasElements({ style: { display: "block" } })}
-          {!resultImage || (
-            <img alt="result" src={resultImage} style={{ maxWidth: "100%" }} />
-          )}
+          </div>
         </div>
       </div>
-    </div>
+    </FormProvider>
   );
 }

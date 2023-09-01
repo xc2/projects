@@ -45,16 +45,16 @@ def use_node_modules(name, package = None, npmrc = None, pnpm_lock = None, **kwa
 
 # https://bazel.build/rules/lib/globals/module
 # https://registry.bazel.build
-bazel_dep(name = "aspect_bazel_lib", version = "1.33.0")
-bazel_dep(name = "aspect_rules_js", version = "1.30.0")
-bazel_dep(name = "aspect_rules_swc", version = "1.0.2")
-bazel_dep(name = "aspect_rules_ts", version = "1.4.5")
+bazel_dep(name = "aspect_bazel_lib", version = "1.34.1")
+bazel_dep(name = "aspect_rules_js", version = "1.32.1")
+bazel_dep(name = "aspect_rules_swc", version = "1.1.0")
+bazel_dep(name = "aspect_rules_ts", version = "2.0.0-rc0")
 bazel_dep(name = "bazel_skylib", version = "1.4.2")
 
 ####### Node.js version #########
 # By default you get the node version from DEFAULT_NODE_VERSION in @rules_nodejs//nodejs:repositories.bzl
 # Optionally you can pin a different node version:
-bazel_dep(name = "rules_nodejs", version = "6.0.0")
+bazel_dep(name = "rules_nodejs", version = "6.0.1")
 node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
 node.toolchain(node_version = "18.16.1")
 use_repo(node, "nodejs")

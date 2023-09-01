@@ -1,3 +1,5 @@
+import { AppConfig } from "./config";
+
 export const COMPOSITES: Readonly<GlobalCompositeOperation[]> = [
   "color",
   "color-burn",
@@ -27,6 +29,18 @@ export const COMPOSITES: Readonly<GlobalCompositeOperation[]> = [
   "xor",
 ];
 
-export const DEFAULT_COMPOSITE: GlobalCompositeOperation = "exclusion";
-
-export const DEFAULT_OPACITY: number = 0.1;
+export const DEFAULT_APP_CONFIG: AppConfig = {
+  processing: {
+    watermark: {
+      font: "sans-serif",
+      opacity: 0.1,
+      color: "black",
+      composite: "exclusion",
+      text: "111",
+    },
+  },
+  output: {
+    type: "image/png",
+    quality: 1,
+  },
+};
