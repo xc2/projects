@@ -21,6 +21,7 @@ export function useImageElement(file: Blob | null | undefined) {
         });
         img.addEventListener("error", reject);
         img.src = src;
+        document.body.appendChild(img);
       });
     },
     {

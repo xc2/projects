@@ -276,3 +276,6 @@ go.work
 /.aswb/
 /.clwb/
 
+
+*.DS_Store
+._.*

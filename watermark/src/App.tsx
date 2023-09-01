@@ -23,14 +23,20 @@ export function App() {
     if (!img || !canvas) {
       return;
     }
-    const imageWidth = img.naturalWidth || img.width;
-    const imageHeight = img.naturalHeight || img.height;
+    const zoom = 1;
+    const imageWidth = zoom * (img.naturalWidth || img.width);
+    const imageHeight = zoom * (img.naturalHeight || img.height);
     const radians = (-30 * Math.PI) / 180;
+    console.log(1, imageWidth, imageHeight);
 
     canvas.width = imageWidth;
     canvas.height = imageHeight;
-    const ctx = canvas.getContext("2d")!;
+    const ctx = canvas.getContext("2d", {
+      colorSpace: "srgb",
+      alpha: true,
+    })!;
     ctx.drawImage(img, 0, 0);
+    // return;
 
     ctx.textBaseline = "top";
     ctx.fillStyle = "rgba(0, 0, 0, .2)";
@@ -86,9 +92,12 @@ export function App() {
             <Upload {...props} onChange={(file) => setCurrentFile(file)} />
           )}
         </Field>
+
         {/*{textPool.renderCanvasElements({ style: { display: "none" } })}*/}
-        {renderCanvasElements({ style: { display: "none" } })}
-        {!resultImage || <img src={resultImage} style={{ width: "700px" }} />}
+        {renderCanvasElements({ style: { display: "block" } })}
+        {!resultImage || (
+          <img alt="result" src={resultImage} style={{ width: "700px" }} />
+        )}
       </div>
     </div>
   );
