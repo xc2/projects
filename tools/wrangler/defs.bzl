@@ -1,4 +1,6 @@
 load("@wrangler//tools/wrangler:wrangler/package_json.bzl", _bin = "bin")
+load("@aspect_rules_esbuild//esbuild:defs.bzl", _esbuild = "esbuild")
+load("@aspect_rules_js//js:defs.bzl", "js_library", "js_run_devserver", "js_test")
 
 def pages_deploy(src, project, name = None):
     name = name or "pages_deploy"
@@ -13,6 +15,48 @@ def pages_deploy(src, project, name = None):
             "--commit-dirty",
             "--project-name",
             project,
+        ],
+        tags = ["deliverable"],
+    )
+
+def worker(src, bundle = {}, dev = {}):
+    _esbuild(
+        name = "bundle",
+        srcs = [src],
+        entry_point = "{}:worker.js".format(src),
+        format = "esm",
+        output = "worker.js",
+        target = "es2022",
+        **bundle
+    )
+    _bin.wrangler_binary(
+        name = "_wrangler",
+        chdir = native.package_name(),
+    )
+
+    js_run_devserver(
+        name = "dev",
+        data = [
+            ":bundle",
+            "wrangler.toml",
+        ],
+        args = [
+            "dev",
+            "--no-bundle",
+            "worker.js",
+        ],
+        tool = ":_wrangler",
+        **dev
+    )
+
+    _bin.wrangler_binary(
+        name = "deploy",
+        chdir = native.package_name(),
+        data = [":bundle", "wrangler.toml"],
+        args = [
+            "deploy",
+            "--no-bundle",
+            "worker.js",
         ],
         tags = ["deliverable"],
     )

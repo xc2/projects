@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "lib": ["es2023"],
+    "module": "ESNext",
+    "target": "es2022",
+
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "types": ["@cloudflare/workers-types"]
+  },
+  "include": ["**/*.ts"]
+}

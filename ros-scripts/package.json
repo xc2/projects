@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {},
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230821.0",
+    "itty-router": "^4.0.22",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {}
+}
