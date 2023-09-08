@@ -38,13 +38,14 @@ ts_project(
         ":node_modules/tailwindcss",
         ":node_modules/tailwindcss-animate",
         ":node_modules/vite",
+        ":node_modules/vite-plugin-pwa",
     ],
 )
 
 SRC = [
     ":index.html",
     "//watermark/src",
-]
+] + glob(["public/*"])
 
 VITE_DEPS = [
     ":tsconfig",

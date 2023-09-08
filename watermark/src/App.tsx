@@ -89,7 +89,7 @@ export function App() {
   return (
     <FormProvider {...form}>
       <div className="flex flex-col space-y-3">
-        <h1 className="text-2xl pl-3 pr-3 pt-6">Make watermark</h1>
+        <h1 className="text-2xl pl-3 pr-3 pt-6">Watermark 1</h1>
 
         <div className="flex pl-3 pr-3 items-start space-x-2">
           <div className="basis-1/4 sticky top-0 space-y-3">
@@ -117,7 +117,7 @@ export function App() {
             </HookField>
           </div>
           <div className="flex-auto min-w-0">
-            {renderCanvasElements({ style: { display: "block" } })}
+            {renderCanvasElements({ style: { display: "none" } })}
             {!resultImage || (
               <img
                 alt="result"

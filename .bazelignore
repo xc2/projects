@@ -6,4 +6,5 @@ watermark/node_modules
 tools/wrangler/node_modules
 tools/lint/node_modules
 tools/shadcn/node_modules
+tools/pwa/node_modules
 ros-scripts/node_modules

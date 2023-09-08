@@ -16,6 +16,6 @@ eslint_bin.eslint_binary(
     chdir = "$$BUILD_WORKING_DIRECTORY",
 )
 
-## gazelle:js_validate_import_statements off
-
 # gazelle:js_resolve **/*.{svg,css} assets
+
+# gazelle:js_ignore_imports virtual:pwa-register

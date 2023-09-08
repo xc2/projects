@@ -1,10 +1,10 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "dev": "ibazel run //watermark:dev",
+    "build": "bazel build //watermark",
+    "deploy": "bazel run //watermark:pages_deploy",
+    "pwa:gen": "bazel run -- //tools/pwa:gen --preset minimal public/favicon.svg"
   },
   "dependencies": {
     "@fluentui/react-components": "^9.27.4",
@@ -28,6 +28,7 @@
     "tailwindcss": "^3.3.3",
     "tailwindcss-animate": "^1.0.6",
     "typescript": "^4.9.5",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-pwa": "^0.16.4"
   }
 }

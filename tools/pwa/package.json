@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@vite-pwa/assets-generator": "^0.0.9"
+  }
+}
