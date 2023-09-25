@@ -1,0 +1,34 @@
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  tsconfig-to-swcconfig:
+    specifier: ^2.5.1
+    version: 2.5.1
+
+packages:
+
+  /@fastify/deepmerge@1.3.0:
+    resolution: {integrity: sha512-J8TOSBq3SoZbDhM9+R/u77hP93gz/rajSA+K2kGyijPpORPWUXHUpTaleoj+92As0S9uPRP7Oi8IqMf0u+ro6A==}
+    dev: false
+
+  /joycon@3.1.1:
+    resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
+    engines: {node: '>=10'}
+    dev: false
+
+  /jsonc-parser@3.2.0:
+    resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
+    dev: false
+
+  /tsconfig-to-swcconfig@2.5.1:
+    resolution: {integrity: sha512-IEBPzSDEQAKuUh/y+6CELaj1RzT9uwOy8mFwGA+VNrVIj2D8qKapvqhDNBuSfhUSA0B2mcH734J8hLn3+065sw==}
+    hasBin: true
+    dependencies:
+      '@fastify/deepmerge': 1.3.0
+      joycon: 3.1.1
+      jsonc-parser: 3.2.0
+    dev: false

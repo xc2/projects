@@ -1,0 +1,30 @@
+load("//tools/jsts:defs.bzl", "ts_config", "ts_project")
+
+ts_config(
+    name = "tsconfig",
+    src = "tsconfig.json",
+    visibility = [":__subpackages__"],
+    deps = ["//game-start:node_modules/@cloudflare/workers-types"],
+)
+
+ts_project(
+    name = "src",
+    srcs = [
+        "render.ts",
+        "router.ts",
+        "rules.ts",
+        "tags.ts",
+        "types.ts",
+        "worker.ts",
+        "worker-configuration.d.ts",
+    ],
+    tsconfig = "tsconfig",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//game-start:node_modules/itty-router",
+        "//game-start:node_modules/surgio",
+        "//game-start:node_modules/yaml",
+        "//game-start/src/db",
+        "//game-start/src/surgio/utils",
+    ],
+)

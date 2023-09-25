@@ -19,7 +19,7 @@ def pages_deploy(src, project, name = None):
         tags = ["deliverable"],
     )
 
-def worker(src, bundle = {}, dev = {}):
+def worker(src, platform = "browser", data = [], dev_data = [], bundle = {}, dev = {}):
     _esbuild(
         name = "bundle",
         srcs = [src],
@@ -27,6 +27,7 @@ def worker(src, bundle = {}, dev = {}):
         format = "esm",
         output = "worker.js",
         target = "es2022",
+        platform = platform,
         **bundle
     )
     _bin.wrangler_binary(
@@ -38,8 +39,8 @@ def worker(src, bundle = {}, dev = {}):
         name = "dev",
         data = [
             ":bundle",
-            "wrangler.toml",
-        ],
+            "wrangler.toml"
+        ] + data + dev_data,
         args = [
             "dev",
             "--no-bundle",
@@ -57,6 +58,20 @@ def worker(src, bundle = {}, dev = {}):
             "deploy",
             "--no-bundle",
             "worker.js",
+        ],
+        tags = ["deliverable"],
+    )
+
+    _bin.wrangler_binary(
+        name = "deploy_staging",
+        chdir = native.package_name(),
+        data = [":bundle", "wrangler.toml"] + data,
+        args = [
+            "deploy",
+            "--no-bundle",
+            "worker.js",
+            "--env",
+            "staging"
         ],
         tags = ["deliverable"],
     )

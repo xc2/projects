@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "tsconfig-to-swcconfig": "^2.5.1"
+  }
+}

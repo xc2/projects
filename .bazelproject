@@ -20,3 +20,6 @@ additional_languages:
 
 ts_config_rules:
   //watermark:tsconfig
+  //ros-scripts/src:tsconfig
+  //game-start/src:tsconfig
+

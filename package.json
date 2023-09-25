@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "install-for-dev": "bazel run -- @pnpm//:pnpm install",
     "prepare": "bazel run //tools/lint:husky install || true"
   },
   "dependencies": {

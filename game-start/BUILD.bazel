@@ -1,0 +1,17 @@
+load("@npm//:defs.bzl", "npm_link_all_packages")
+load("//tools/wrangler:defs.bzl", "worker")
+load("//tools/drizzle:defs.bzl", "gendb")
+
+npm_link_all_packages(name = "node_modules")
+
+worker(
+    src = "//game-start/src",
+    platform = "node",
+    data = ["//game-start/src/db:procedures.js"],
+    dev_data = ['.dev.vars'],
+)
+
+gendb(
+    name = "gendb",
+    src = "//game-start/src/db:schema.js",
+)

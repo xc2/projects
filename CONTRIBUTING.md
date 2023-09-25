@@ -6,7 +6,7 @@ bazel run -- @pnpm//:pnpm install
 
 
 ```shell
-bazel run -- @pnpm//:pnpm --ignore-workspace install
+bazel run -- @pnpm//:pnpm --ignore-workspace --lockfile-only install
 ```
 
 ```shell

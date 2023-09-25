@@ -1,0 +1,15 @@
+load("//tools/jsts:defs.bzl", "ts_config", "ts_project")
+
+ts_project(
+    name = "utils",
+    srcs = [
+        "clash.ts",
+        "utils.ts",
+    ],
+    tsconfig = "//game-start/src:tsconfig",
+    deps = [
+        "//game-start:node_modules/@types/lodash",
+        "//game-start:node_modules/lodash",
+        "//game-start:node_modules/surgio",
+    ],
+)
