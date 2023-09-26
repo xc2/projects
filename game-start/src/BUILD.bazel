@@ -25,6 +25,7 @@ ts_project(
         "//game-start:node_modules/surgio",
         "//game-start:node_modules/yaml",
         "//game-start/src/db",
+        "//game-start/src/lib",
         "//game-start/src/surgio/utils",
     ],
 )

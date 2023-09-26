@@ -6,9 +6,8 @@ npm_link_all_packages(name = "node_modules")
 
 worker(
     src = "//game-start/src",
+    dev_data = [".dev.vars"],
     platform = "node",
-    data = ["//game-start/src/db:procedures.js"],
-    dev_data = ['.dev.vars'],
 )
 
 gendb(

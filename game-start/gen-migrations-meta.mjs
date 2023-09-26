@@ -11,6 +11,19 @@ function resolvePath(target) {
 const r = readMigrationFiles({
   migrationsFolder: resolvePath("./migrations"),
 });
+
+for (const record of r) {
+  record.sql = record.sql
+    .map((line) => {
+      line = line.replace(/^\n+/, "").replace(/\n+$/, "");
+      if (line.startsWith("/*") && line.endsWith("*/")) {
+        return "";
+      }
+      return line;
+    })
+    .filter(Boolean);
+}
+
 const ts =
   `
 /**

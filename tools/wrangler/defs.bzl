@@ -44,6 +44,8 @@ def worker(src, platform = "browser", data = [], dev_data = [], bundle = {}, dev
         args = [
             "dev",
             "--no-bundle",
+            "--ip",
+            "127.0.0.1",
             "worker.js",
         ],
         tool = ":_wrangler",

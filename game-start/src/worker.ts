@@ -9,8 +9,13 @@
  */
 
 import apiRouter from "./router";
-import { migrations } from "./db/migrations";
-import Procedures from "./db/procedures";
+import { createDrizzleD1, DrizzleD1DB } from "./lib/drizzle-d1";
+
+declare global {
+  interface ExecutionContext {
+    db: DrizzleD1DB;
+  }
+}
 
 // Export a default object containing event handlers
 export default {
@@ -21,9 +26,7 @@ export default {
     env: Env,
     ctx: ExecutionContext,
   ): Promise<Response> {
-    const procedures = new Procedures(env.DB);
-    await procedures.migrate(migrations);
-
+    ctx.db = createDrizzleD1(env.DB);
     return apiRouter.handle(request, env, ctx);
   },
 };

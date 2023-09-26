@@ -14,14 +14,11 @@ mode = "smart"
 binding = "DB"
 database_name = "gateway"
 database_id = "51de9990-fffc-4e7f-a843-063000f0a87b"
-procedures = "./src/db/procedures.js"
-
 
 [[env.staging.d1_databases]]
 binding = "DB"
 database_name = "gateway-staging"
 database_id = "92d9573c-08e6-409a-8632-c7cd3cd9c2dc"
-procedures = "./src/db/procedures.js"
 
 # Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
 # Docs: https://developers.cloudflare.com/workers/runtime-apis/kv

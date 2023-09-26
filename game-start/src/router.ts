@@ -2,8 +2,16 @@ import { Router, text } from "itty-router";
 import { WorkerRouter } from "./types";
 import yaml from "yaml";
 import { getClashConfig } from "./render";
+import { migrations } from "./db/migrations";
 
 const router = Router() as WorkerRouter;
+
+router.put("/db/migrate", async (request, env, context) => {
+  const db = context.db;
+  console.log(migrations);
+  await db.dialect.migrate(migrations, db.session);
+  return text("DONE");
+});
 
 router.get("/config/:name/:key/autoupdate/", (request, env, context) => {
   const { name, key } = request.params;
