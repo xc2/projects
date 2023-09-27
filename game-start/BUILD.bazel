@@ -6,10 +6,10 @@ npm_link_all_packages(name = "node_modules")
 
 worker(
     src = "//game-start/src",
-    dev_data = [".dev.vars"],
     bundle = {
-         "config": ":config.mjs"
-    }
+        "config": ":config.mjs",
+    },
+    dev_data = [".dev.vars"],
 )
 
 gendb(

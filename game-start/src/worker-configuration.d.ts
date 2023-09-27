@@ -16,5 +16,10 @@ interface Env {
   DB: D1Database;
   CLOUDFLARE_ACCESS_TEAM: string;
   CLOUDFLARE_APP_AUD: string;
+  [key: `AUTOUPDATE_${string}`]: string;
+  [key: PropertyKey]: unknown;
+}
+
+interface AppVars {
   [key: PropertyKey]: unknown;
 }

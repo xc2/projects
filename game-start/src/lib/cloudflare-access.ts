@@ -1,5 +1,11 @@
-import { createRemoteJWKSet, jwtVerify } from "jose";
+import { createRemoteJWKSet, JWTPayload, jwtVerify } from "jose";
 
+export interface CloudflareJWTPayload extends JWTPayload {
+  email: string;
+  type: string;
+  identity_nonce: string;
+  country: string;
+}
 export class CloudflareAccess {
   JWKS: ReturnType<typeof createRemoteJWKSet>;
   constructor(team: string) {
@@ -7,7 +13,8 @@ export class CloudflareAccess {
       new URL(`https://${team}.cloudflareaccess.com/cdn-cgi/access/certs`),
     );
   }
-  VerifyJWT(jwt: string, audience: string) {
-    return jwtVerify(jwt, this.JWKS, { audience });
+  async VerifyJWT(jwt: string, audience: string) {
+    const { payload } = await jwtVerify(jwt, this.JWKS, { audience });
+    return payload as CloudflareJWTPayload;
   }
 }

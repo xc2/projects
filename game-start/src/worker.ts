@@ -9,6 +9,7 @@
  */
 import { CloudflareAccess, createDrizzleD1, NodeService } from "./lib";
 import { app } from "./app";
+import * as schema from "./db/schema";
 
 // Export a default object containing event handlers
 export default {
@@ -19,7 +20,7 @@ export default {
     env: Env,
     ctx: ExecutionContext,
   ): Promise<Response> {
-    const db = createDrizzleD1(env.DB);
+    const db = createDrizzleD1(env.DB, { schema });
     const node = new NodeService(db);
 
     env.db = db;

@@ -1,6 +1,6 @@
 import { D1Transaction, drizzle, DrizzleD1Database } from "drizzle-orm/d1";
 import { SQLiteAsyncDialect, SQLiteSession } from "drizzle-orm/sqlite-core";
-import type { ExtractTablesWithRelations } from "drizzle-orm";
+import type { ExtractTablesWithRelations, DrizzleConfig } from "drizzle-orm";
 
 function proxySession<T extends SQLiteSession<"async", unknown, any, any>>(
   session: T,
@@ -27,8 +27,8 @@ export interface DrizzleD1DB<
 }
 export function createDrizzleD1<
   TSchema extends Record<string, unknown> = Record<string, never>,
->(db: D1Database): DrizzleD1DB<TSchema> {
-  const _db = drizzle(db) as DrizzleD1DB<TSchema>;
+>(db: D1Database, config?: DrizzleConfig<TSchema>): DrizzleD1DB<TSchema> {
+  const _db = drizzle(db, config) as DrizzleD1DB<TSchema>;
   _db.session = proxySession(_db.session);
   return _db;
 }
