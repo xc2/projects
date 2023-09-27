@@ -1,5 +1,5 @@
 import { getClashNodes } from "./surgio/utils/clash";
-import { ProxyNode } from "./types";
+import { ProxyNode } from "./lib";
 import { hasTag } from "./tags";
 
 export function getClashConfig(nodes: ProxyNode[]) {

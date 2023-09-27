@@ -7,16 +7,8 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-
-import apiRouter from "./router";
-import { createDrizzleD1, DrizzleD1DB, NodeService } from "./lib";
-
-declare global {
-  interface ExecutionContext {
-    db: DrizzleD1DB;
-    Node: NodeService;
-  }
-}
+import { CloudflareAccess, createDrizzleD1, NodeService } from "./lib";
+import { app } from "./app";
 
 // Export a default object containing event handlers
 export default {
@@ -30,8 +22,9 @@ export default {
     const db = createDrizzleD1(env.DB);
     const node = new NodeService(db);
 
-    ctx.db = db;
-    ctx.Node = node;
-    return apiRouter.handle(request, env, ctx);
+    env.db = db;
+    env.Node = node;
+    env.CloudflareAccess = new CloudflareAccess(env.CLOUDFLARE_ACCESS_TEAM);
+    return app.fetch(request, env, ctx);
   },
 };

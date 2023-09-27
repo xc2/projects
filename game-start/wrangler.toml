@@ -8,7 +8,9 @@ mode = "smart"
 # Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
 # Note: Use secrets to store sensitive data.
 # Docs: https://developers.cloudflare.com/workers/platform/environment-variables
-# [vars]
+[vars]
+CLOUDFLARE_ACCESS_TEAM = "109cafe"
+CLOUDFLARE_APP_AUD = "5c5149386b2995a65d92d23b2da4fd660844ce03143af24603fc3541695d07b0"
 
 [[d1_databases]]
 binding = "DB"

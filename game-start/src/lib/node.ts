@@ -1,5 +1,5 @@
 import { DrizzleD1DB } from "./drizzle-d1";
-import { ProxyNode } from "../types";
+import { ProxyNode } from "./types";
 import { NodeTypeEnum } from "surgio/build/types";
 import { nodes } from "../db/schema";
 import { eq } from "drizzle-orm";

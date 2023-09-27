@@ -7,7 +7,9 @@ npm_link_all_packages(name = "node_modules")
 worker(
     src = "//game-start/src",
     dev_data = [".dev.vars"],
-    platform = "node",
+    bundle = {
+         "config": ":config.mjs"
+    }
 )
 
 gendb(
