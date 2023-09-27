@@ -1,10 +1,12 @@
 load("//tools/jsts:defs.bzl", "ts_config", "ts_project")
 
+# gazelle:js_generation_mode none
+
 ts_project(
-    name = "utils",
+    name = "surgio",
     srcs = [
-        "clash.ts",
-        "utils.ts",
+        "utils/clash.ts",
+        "utils/utils.ts",
     ],
     tsconfig = "//game-start/src:tsconfig",
     deps = [

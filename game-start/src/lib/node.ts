@@ -3,6 +3,7 @@ import { ProxyNode } from "../types";
 import { NodeTypeEnum } from "surgio/build/types";
 import { nodes } from "../db/schema";
 import { eq } from "drizzle-orm";
+import { sortBy } from "lodash";
 
 export class NodeService {
   constructor(private readonly db: DrizzleD1DB) {}
@@ -14,7 +15,9 @@ export class NodeService {
       .from(nodes)
       .where(eq(nodes.disabled, false))
       .all();
-    return all.map((node) => {
+    return sortBy(all, [
+      (node) => (node.priority === 0 ? 0 : node.priority || 100),
+    ]).map((node) => {
       return {
         type: NodeTypeEnum.Shadowsocks,
         nodeName: node.title,

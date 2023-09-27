@@ -28,10 +28,12 @@ ts_project(
     tsconfig = "tsconfig",
     visibility = ["//visibility:public"],
     deps = [
+        "//game-start:node_modules/@types/lodash",
         "//game-start:node_modules/drizzle-orm",
         "//game-start:node_modules/itty-router",
+        "//game-start:node_modules/lodash",
         "//game-start:node_modules/surgio",
         "//game-start:node_modules/yaml",
-        "//game-start/src/surgio/utils",
+        "//game-start/src/surgio",
     ],
 )
