@@ -7,5 +7,8 @@ CREATE TABLE `nodes` (
 	`priority` integer DEFAULT 100,
 	`shared_key` text DEFAULT '' NOT NULL,
 	`method` text DEFAULT 'aes-128-gcm',
-	`udp` integer DEFAULT false
+	`udp` integer DEFAULT false,
+	`disabled` integer DEFAULT false,
+	`created_at` integer DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` integer DEFAULT CURRENT_TIMESTAMP
 );

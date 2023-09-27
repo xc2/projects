@@ -1,4 +1,5 @@
-import { integer, sqliteTable, text, unique } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { sql } from "drizzle-orm";
 
 export const nodes = sqliteTable("nodes", {
   key: text("key").primaryKey(),
@@ -12,4 +13,11 @@ export const nodes = sqliteTable("nodes", {
     enum: ["aes-128-gcm", "aes-256-gcm", "chacha20-ietf-poly1305"],
   }).default("aes-128-gcm"),
   udp: integer("udp", { mode: "boolean" }).default(false),
+  disabled: integer("disabled", { mode: "boolean" }).default(false),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(
+    sql`CURRENT_TIMESTAMP`,
+  ),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).default(
+    sql`CURRENT_TIMESTAMP`,
+  ),
 });

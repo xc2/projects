@@ -8,12 +8,11 @@ const router = Router() as WorkerRouter;
 
 router.put("/db/migrate", async (request, env, context) => {
   const db = context.db;
-  console.log(migrations);
   await db.dialect.migrate(migrations, db.session);
   return text("DONE");
 });
 
-router.get("/config/:name/:key/autoupdate/", (request, env, context) => {
+router.get("/config/:name/:key/autoupdate/", async (request, env, { Node }) => {
   const { name, key } = request.params;
   const match = env["AUTOUPDATE_" + name] || "";
   if (key.toLowerCase() !== match.toLowerCase()) {
@@ -22,7 +21,8 @@ router.get("/config/:name/:key/autoupdate/", (request, env, context) => {
   const ua = request.headers.get("user-agent");
 
   if (/clash/i.test(ua)) {
-    return text(yaml.stringify(getClashConfig([])));
+    const all = await Node.getAllNodes();
+    return text(yaml.stringify(getClashConfig(all)));
   }
 });
 

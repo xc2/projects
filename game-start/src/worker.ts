@@ -9,11 +9,12 @@
  */
 
 import apiRouter from "./router";
-import { createDrizzleD1, DrizzleD1DB } from "./lib/drizzle-d1";
+import { createDrizzleD1, DrizzleD1DB, NodeService } from "./lib";
 
 declare global {
   interface ExecutionContext {
     db: DrizzleD1DB;
+    Node: NodeService;
   }
 }
 
@@ -26,7 +27,11 @@ export default {
     env: Env,
     ctx: ExecutionContext,
   ): Promise<Response> {
-    ctx.db = createDrizzleD1(env.DB);
+    const db = createDrizzleD1(env.DB);
+    const node = new NodeService(db);
+
+    ctx.db = db;
+    ctx.Node = node;
     return apiRouter.handle(request, env, ctx);
   },
 };

@@ -31,8 +31,13 @@ def worker(src, platform = "browser", data = [], dev_data = [], bundle = {}, dev
         **bundle
     )
     _bin.wrangler_binary(
-        name = "_wrangler",
+        name = "_wrangler_dev",
         chdir = native.package_name(),
+        fixed_args = [
+            "dev",
+            "--persist-to",
+            "$$BUILD_WORKSPACE_DIRECTORY/{}/.devstate".format(native.package_name()),
+        ]
     )
 
     js_run_devserver(
@@ -42,13 +47,12 @@ def worker(src, platform = "browser", data = [], dev_data = [], bundle = {}, dev
             "wrangler.toml"
         ] + data + dev_data,
         args = [
-            "dev",
             "--no-bundle",
             "--ip",
             "127.0.0.1",
             "worker.js",
         ],
-        tool = ":_wrangler",
+        tool = ":_wrangler_dev",
         **dev
     )
 

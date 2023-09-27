@@ -1,5 +1,7 @@
 load("//tools/jsts:defs.bzl", "ts_config", "ts_project")
 
+# gazelle:js_generation_mode none
+
 ts_config(
     name = "tsconfig",
     src = "tsconfig.json",
@@ -10,6 +12,11 @@ ts_config(
 ts_project(
     name = "src",
     srcs = [
+        "db/migrations.ts",
+        "db/schema.ts",
+        "lib/drizzle-d1.ts",
+        "lib/index.ts",
+        "lib/node.ts",
         "render.ts",
         "router.ts",
         "rules.ts",
@@ -21,11 +28,10 @@ ts_project(
     tsconfig = "tsconfig",
     visibility = ["//visibility:public"],
     deps = [
+        "//game-start:node_modules/drizzle-orm",
         "//game-start:node_modules/itty-router",
         "//game-start:node_modules/surgio",
         "//game-start:node_modules/yaml",
-        "//game-start/src/db",
-        "//game-start/src/lib",
         "//game-start/src/surgio/utils",
     ],
 )
