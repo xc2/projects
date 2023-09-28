@@ -4,7 +4,7 @@ import { migrations } from "./db/migrations";
 import { AuthMiddleware } from "./middlewares/auth";
 import { getClashConfig } from "./render";
 import { stringify } from "yaml";
-import { FullSchema } from "./db/types";
+import { FullSchema } from "./db/schema";
 
 declare global {
   interface Env {
@@ -17,7 +17,7 @@ declare global {
 
 export const app = new Hono<{ Bindings: Env; Variables: AppVars }>();
 
-app.put("/db/migrate", async (c) => {
+app.put("/db/migrate/", async (c) => {
   const db = c.env.db;
   await db.dialect.migrate(migrations, db.session);
   return c.text("DONE");
@@ -40,11 +40,34 @@ app.get("/config/:name/:key/autoupdate/", async (c) => {
 
 app.use("/api/*", AuthMiddleware);
 
-app.get("/api/v1/user", ({ get, json }) => {
-  return json(get("CloudflareUser"));
+app.get("/api/v1/user", (c) => {
+  return c.json(c.get("CloudflareUser"));
 });
 
-app.get("/api/v1/nodes", async ({ json, env, req }) => {
-  const nodes = await env.Node.getNodes(req.queries());
-  return json(nodes);
+app.get("/api/v1/nodes", async (c) => {
+  const r = await c.env.Node.list(c.req.queries());
+  return c.json(r);
+});
+
+app.get("/api/v1/nodes/:key", async (c) => {
+  const r = await c.env.Node.getByPrimaryKey(c.req.param("key"));
+  return c.json(r);
+});
+
+app.post("/api/v1/nodes", async (c) => {
+  const r = await c.env.Node.create(await c.req.json<any>());
+  return c.json(r);
+});
+
+app.patch("/api/v1/nodes/:key", async (c) => {
+  const r = await c.env.Node.update(
+    c.req.param("key"),
+    await c.req.json<any>(),
+  );
+  return c.json(r);
+});
+
+app.delete("/api/v1/nodes/:key", async (c) => {
+  const r = await c.env.Node.delete(c.req.param("key"));
+  return c.json(r);
 });

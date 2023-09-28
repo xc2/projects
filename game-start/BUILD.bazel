@@ -14,5 +14,6 @@ worker(
 
 gendb(
     name = "gendb",
-    src = "//game-start/src:db/schema.js",
+    src = "//game-start/src/db:schema.js",
+    data = ["//game-start/src/db"],
 )

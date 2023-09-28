@@ -18,12 +18,12 @@ export const migrations: MigrationMeta[] = [
         "\t`method` text DEFAULT 'aes-128-gcm',\n" +
         '\t`udp` integer DEFAULT false,\n' +
         '\t`disabled` integer DEFAULT false,\n' +
-        '\t`created_at` integer DEFAULT CURRENT_TIMESTAMP,\n' +
-        '\t`updated_at` integer DEFAULT CURRENT_TIMESTAMP\n' +
+        "\t`created_at` datetime DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),\n" +
+        "\t`updated_at` datetime DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))\n" +
         ');'
     ],
     bps: true,
-    folderMillis: 1695801520556,
-    hash: 'bf7ccbd8e56af49ce1d5008a4241dd26adb5a18d634307a39a5e39d0527490de'
+    folderMillis: 1695882150091,
+    hash: '2b59566325e0b52a32a5b50dc9d7b63bef81511e2956067246efb0c4911b062a'
   }
 ];

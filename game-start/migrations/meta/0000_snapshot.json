@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "c22dadb5-b766-48fc-97a6-20b8591e15ae",
+  "id": "6bbfe188-e9bc-4f36-9d86-549aa40c6063",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "nodes": {
@@ -88,19 +88,19 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "integer",
+          "type": "datetime",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "CURRENT_TIMESTAMP"
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "integer",
+          "type": "datetime",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "CURRENT_TIMESTAMP"
+          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
         }
       },
       "indexes": {},
