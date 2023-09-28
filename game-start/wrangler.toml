@@ -19,7 +19,7 @@ CLOUDFLARE_APP_AUD = "5c5149386b2995a65d92d23b2da4fd660844ce03143af24603fc354169
 [[d1_databases]]
 binding = "DB"
 database_name = "gateway"
-database_id = "51de9990-fffc-4e7f-a843-063000f0a87b"
+database_id = "529b72ac-3cad-44ec-aa1b-4cc92aa15d33"
 
 [[env.staging.d1_databases]]
 binding = "DB"
