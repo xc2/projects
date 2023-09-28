@@ -1,5 +1,42 @@
 import { camelCase, kebabCase, snakeCase } from "lodash";
 
+export const pickAndFormatStringList = (
+  obj: Record<string, any>,
+  keyList: readonly string[],
+  options: {
+    keyFormat?: "camelCase" | "snakeCase" | "kebabCase";
+    stringifyValue?: boolean;
+  } = {},
+): readonly string[] => {
+  const result: string[] = [];
+  const { keyFormat, stringifyValue } = options;
+
+  keyList.forEach((key) => {
+    if (obj.hasOwnProperty(key)) {
+      const propertyKey = keyFormat ? changeCase(key, keyFormat) : key;
+      const propertyValue = obj[key];
+
+      if (Array.isArray(propertyValue)) {
+        result.push(
+          `${propertyKey}=${
+            stringifyValue
+              ? JSON.stringify(propertyValue.join(","))
+              : propertyValue.join(",")
+          }`,
+        );
+      } else {
+        result.push(
+          `${propertyKey}=${
+            stringifyValue ? JSON.stringify(propertyValue) : propertyValue
+          }`,
+        );
+      }
+    }
+  });
+
+  return result;
+};
+
 // istanbul ignore next
 export const changeCase = (
   str: string,

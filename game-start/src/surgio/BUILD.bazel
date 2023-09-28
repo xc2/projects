@@ -6,6 +6,7 @@ ts_project(
     name = "surgio",
     srcs = [
         "utils/clash.ts",
+        "utils/quantumult.ts",
         "utils/utils.ts",
     ],
     tsconfig = "//game-start/src:tsconfig",
