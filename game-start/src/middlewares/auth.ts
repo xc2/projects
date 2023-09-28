@@ -1,6 +1,7 @@
 import { HTTPException } from "hono/http-exception";
 import { CloudflareJWTPayload } from "../lib";
-import { MiddlewareHandler } from "hono";
+import { MiddlewareHandler, Context } from "hono";
+import { getCookie } from "hono/cookie";
 
 declare global {
   interface AppVars {
@@ -8,11 +9,23 @@ declare global {
   }
 }
 
+function getToken(c: Context) {
+  const token = c.req.header("Cf-Access-Jwt-Assertion");
+  if (token) {
+    return token;
+  }
+
+  const cookie = getCookie(c);
+  return cookie["CF_Authorization"];
+}
+
 export const AuthMiddleware: MiddlewareHandler<{
   Bindings: Env;
   Variables: AppVars;
-}> = async function AuthMiddleware({ req, set, env }, next) {
-  const token = req.header("Cf-Access-Jwt-Assertion");
+}> = async function AuthMiddleware(c, next) {
+  const env = c.env,
+    req = c.req;
+  const token = getToken(c);
 
   if (!token) {
     const res = new Response("Unauthorized", {
@@ -28,7 +41,7 @@ export const AuthMiddleware: MiddlewareHandler<{
       token,
       env.CLOUDFLARE_APP_AUD,
     );
-    set("CloudflareUser", payload);
+    c.set("CloudflareUser", payload);
   } catch (e) {
     const res = new Response("Unauthorized", {
       status: 401,
