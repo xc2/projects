@@ -1,9 +1,21 @@
-import { PossibleNodeConfigType, SurgioInternals } from "surgio/build/types";
+import {
+  PossibleNodeConfigType,
+  SurgioInternals,
+  NodeTypeEnum,
+} from "surgio/build/types";
 
 export type ProxyNode = PossibleNodeConfigType & {
+  key: string;
   tags?: string[];
   priority?: number;
 };
 
 export type ProxyCommon = Omit<PossibleNodeConfigType, keyof SurgioInternals> &
-  SurgioInternals & { tags?: string[]; priority?: number };
+  SurgioInternals & { key: string; tags?: string[]; priority?: number };
+
+export type ShadowsocksNode = Extract<
+  ProxyNode,
+  { type: NodeTypeEnum.Shadowsocks }
+>;
+
+export { NodeTypeEnum };

@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { CloudflareAccess, DrizzleD1DB, NodeService } from "./lib";
 import { migrations } from "./db/migrations";
 import { AuthMiddleware } from "./middlewares/auth";
-import { getClashConfig } from "./render";
+import { getClashConfig, getShadowRocketConfig } from "./render";
 import { stringify } from "yaml";
 import { FullSchema } from "./db/schema";
 
@@ -35,6 +35,9 @@ app.get("/config/:name/:key/autoupdate/", async (c) => {
   if (/clash/i.test(ua)) {
     const all = await c.env.Node.getAllSurgioNodes();
     return c.text(stringify(getClashConfig(all)));
+  } else if (/(shadowrocket|shadowsocks)/i.test(ua)) {
+    const all = await c.env.Node.getAllSurgioNodes();
+    return c.json(getShadowRocketConfig(all));
   }
 });
 

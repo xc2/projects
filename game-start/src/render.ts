@@ -1,6 +1,10 @@
 import { getClashNodes } from "./surgio/utils/clash";
-import { ProxyNode } from "./lib";
+import { ProxyNode, ShadowsocksNode, NodeTypeEnum } from "./lib";
 import { hasTag } from "./tags";
+
+function isShadowsocksNode(node: ProxyNode): node is ShadowsocksNode {
+  return node.type === NodeTypeEnum.Shadowsocks;
+}
 
 export function getClashConfig(nodes: ProxyNode[]) {
   const _nodes = nodes.filter(
@@ -30,5 +34,26 @@ export function getClashConfig(nodes: ProxyNode[]) {
       "GEOIP,CN,DIRECT",
       "MATCH,auto",
     ],
+  };
+}
+
+export function getShadowRocketConfig(nodes: ProxyNode[]) {
+  return {
+    version: 1,
+    remarks: "请勿共享",
+    servers: nodes.filter(isShadowsocksNode).map((node) => {
+      const r: any = {
+        id: node.key,
+        remarks: node.nodeName,
+        server: node.hostname,
+        server_port: node.port,
+        password: node.password,
+        method: node.method,
+      };
+      if (node.udpRelay) {
+        r.mode = "tcp_and_udp";
+      }
+      return r;
+    }),
   };
 }

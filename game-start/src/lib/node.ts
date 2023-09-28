@@ -1,5 +1,5 @@
 import { DrizzleD1DB } from "./drizzle-d1";
-import { ProxyNode } from "./types";
+import { ShadowsocksNode } from "./types";
 import { NodeTypeEnum } from "surgio/build/types";
 import { nodes, NodesInsert } from "../db/schema";
 import { desc, eq, sql } from "drizzle-orm";
@@ -57,9 +57,7 @@ export class NodeService {
     return r;
   }
 
-  async getAllSurgioNodes(): Promise<
-    Extract<ProxyNode, { type: NodeTypeEnum.Shadowsocks }>[]
-  > {
+  async getAllSurgioNodes(): Promise<ShadowsocksNode[]> {
     const all = await this.db
       .select()
       .from(nodes)
@@ -67,14 +65,15 @@ export class NodeService {
       .all();
     return sortBy(all, [
       (node) => (node.priority === 0 ? 0 : node.priority || 100),
-    ]).map((node) => {
+    ]).map<ShadowsocksNode>((node) => {
       return {
+        key: node.key,
         type: NodeTypeEnum.Shadowsocks,
         nodeName: node.title,
         hostname: node.hostname,
         port: node.port,
         method: node.method,
-        udp: node.udp,
+        udpRelay: node.udp,
         password: node.sharedKey,
       };
     });
