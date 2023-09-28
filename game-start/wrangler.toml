@@ -12,6 +12,10 @@ mode = "smart"
 CLOUDFLARE_ACCESS_TEAM = "109cafe"
 CLOUDFLARE_APP_AUD = "5c5149386b2995a65d92d23b2da4fd660844ce03143af24603fc3541695d07b0"
 
+[env.staging.vars]
+CLOUDFLARE_ACCESS_TEAM = "109cafe"
+CLOUDFLARE_APP_AUD = "5c5149386b2995a65d92d23b2da4fd660844ce03143af24603fc3541695d07b0"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "gateway"
