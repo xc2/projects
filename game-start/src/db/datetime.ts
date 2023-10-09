@@ -1,4 +1,4 @@
-import { customType } from "drizzle-orm/sqlite-core";
+import { customType } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
 export const datetime = customType<{ data: Date; driverData: string }>({

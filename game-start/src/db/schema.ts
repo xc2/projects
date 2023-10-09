@@ -1,22 +1,33 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+  boolean,
+  integer,
+  pgEnum,
+  pgTable,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
-import { datetime, now } from "./datetime";
+import { identity } from "./identity";
 
-export const nodes = sqliteTable("nodes", {
-  key: text("key").primaryKey(),
-  title: text("title").notNull().default(""),
-  hostname: text("hostname").notNull().default(""),
+export const ciphersEnum = pgEnum("ciphers", [
+  "aes-128-gcm",
+  "aes-256-gcm",
+  "chacha20-ietf-poly1305",
+]);
+
+export const nodes = pgTable("nodes", {
+  key: identity("key").primaryKey(),
+  title: varchar("title", { length: 256 }).notNull().default(""),
+  hostname: varchar("hostname", { length: 256 }).notNull().default(""),
   port: integer("port").notNull().default(0),
-  tags: text("tags").default(""),
+  tags: varchar("tags", { length: 256 }).array().default([]),
   priority: integer("priority").default(100),
-  sharedKey: text("shared_key").notNull().default(""),
-  method: text("method", {
-    enum: ["aes-128-gcm", "aes-256-gcm", "chacha20-ietf-poly1305"],
-  }).default("aes-128-gcm"),
-  udp: integer("udp", { mode: "boolean" }).default(false),
-  disabled: integer("disabled", { mode: "boolean" }).default(false),
-  createdAt: datetime("created_at").default(now()),
-  updatedAt: datetime("updated_at").default(now()),
+  sharedKey: varchar("shared_key", { length: 256 }).notNull().default(""),
+  method: ciphersEnum("method").default("aes-128-gcm"),
+  udp: boolean("udp").default(false),
+  disabled: boolean("disabled").default(false),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export type nodes = typeof nodes;

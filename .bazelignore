@@ -9,5 +9,7 @@ tools/shadcn/node_modules
 tools/pwa/node_modules
 tools/drizzle/node_modules
 tools/jsts/node_modules
+tools/prisma/node_modules
+tools/supabase/node_modules
 ros-scripts/node_modules
 game-start/node_modules
