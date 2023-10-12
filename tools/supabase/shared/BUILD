@@ -1,11 +1,14 @@
-load("@supabase//tools/supabase:supabase/package_json.bzl", _bin = "bin")
+load("//tools/supabase:defs.bzl", "supabase_dev")
 
-_bin.supabase_binary(
+supabase_dev(
     name = "shared",
-    args = [
-        "start",
-        "--workdir",
-        ".",
-    ],
-    data = ["config.toml"],
+    command = "status",
+)
+
+supabase_dev(
+    name = "start",
+)
+
+supabase_dev(
+    name = "stop",
 )
