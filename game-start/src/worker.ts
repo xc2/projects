@@ -7,7 +7,10 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-import { CloudflareAccess, createDrizzleD1, NodeService } from "./lib";
+import { Pool } from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
+
+import { CloudflareAccess, NodeService } from "./lib";
 import { app } from "./app";
 import * as schema from "./db/schema";
 
@@ -20,7 +23,8 @@ export default {
     env: Env,
     ctx: ExecutionContext,
   ): Promise<Response> {
-    const db = createDrizzleD1(env.DB, { schema });
+    const pool = new Pool({ connectionString: env.PG_URL });
+    const db = drizzle(pool, { schema });
     const node = new NodeService(db);
 
     env.db = db;

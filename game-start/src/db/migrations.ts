@@ -7,23 +7,30 @@ import type { MigrationMeta } from "drizzle-orm/migrator";
 export const migrations: MigrationMeta[] = [
   {
     sql: [
-      'CREATE TABLE `nodes` (\n' +
-        '\t`key` text PRIMARY KEY NOT NULL,\n' +
-        "\t`title` text DEFAULT '' NOT NULL,\n" +
-        "\t`hostname` text DEFAULT '' NOT NULL,\n" +
-        '\t`port` integer DEFAULT 0 NOT NULL,\n' +
-        "\t`tags` text DEFAULT '',\n" +
-        '\t`priority` integer DEFAULT 100,\n' +
-        "\t`shared_key` text DEFAULT '' NOT NULL,\n" +
-        "\t`method` text DEFAULT 'aes-128-gcm',\n" +
-        '\t`udp` integer DEFAULT false,\n' +
-        '\t`disabled` integer DEFAULT false,\n' +
-        "\t`created_at` datetime DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),\n" +
-        "\t`updated_at` datetime DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))\n" +
-        ');'
+      'DO $$ BEGIN\n' +
+        ` CREATE TYPE "ciphers" AS ENUM('aes-128-gcm', 'aes-256-gcm', 'chacha20-ietf-poly1305');\n` +
+        'EXCEPTION\n' +
+        ' WHEN duplicate_object THEN null;\n' +
+        'END $$;\n',
+      '\n' +
+        'CREATE TABLE IF NOT EXISTS "nodes" (\n' +
+        '\t"key" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,\n' +
+        `\t"title" varchar(256) DEFAULT '' NOT NULL,\n` +
+        `\t"hostname" varchar(256) DEFAULT '' NOT NULL,\n` +
+        '\t"port" integer DEFAULT 0 NOT NULL,\n' +
+        `\t"tags" varchar(256)[] DEFAULT '{}',\n` +
+        '\t"priority" integer DEFAULT 100,\n' +
+        `\t"shared_key" varchar(256) DEFAULT '' NOT NULL,\n` +
+        `\t"method" "ciphers" DEFAULT 'aes-128-gcm',\n` +
+        '\t"udp" boolean DEFAULT false,\n' +
+        '\t"disabled" boolean DEFAULT false,\n' +
+        '\t"created_at" timestamp DEFAULT now() NOT NULL,\n' +
+        '\t"updated_at" timestamp DEFAULT now() NOT NULL\n' +
+        ');\n',
+      '\nCREATE INDEX IF NOT EXISTS "hostname_idx" ON "nodes" ("hostname");'
     ],
     bps: true,
-    folderMillis: 1695882150091,
-    hash: '2b59566325e0b52a32a5b50dc9d7b63bef81511e2956067246efb0c4911b062a'
+    folderMillis: 1697475318074,
+    hash: '0ca5ff89260d221814f0d1070b9a52c4ee528f7a57562d4d4eda224ab534524e'
   }
 ];

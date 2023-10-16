@@ -6,4 +6,5 @@ npm_link_all_packages(name = "node_modules")
 _bin.drizzle_kit_binary(
     name = "drizzle",
     chdir = "$$BUILD_WORKING_DIRECTORY",
+    data = [":node_modules/drizzle-orm"],
 )

@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { CloudflareAccess, DrizzleD1DB, NodeService } from "./lib";
+import { CloudflareAccess, NodeService } from "./lib";
 import { migrations } from "./db/migrations";
 import { AuthMiddleware } from "./middlewares/auth";
 import {
@@ -9,10 +9,11 @@ import {
 } from "./render";
 import { stringify } from "yaml";
 import { FullSchema } from "./db/schema";
+import { NodePgDatabase } from "drizzle-orm/node-postgres";
 
 declare global {
   interface Env {
-    db: DrizzleD1DB<FullSchema>;
+    db: NodePgDatabase<FullSchema>;
     Node: NodeService;
     app: Hono<{ Bindings: Env }>;
     CloudflareAccess: CloudflareAccess;
@@ -23,6 +24,7 @@ export const app = new Hono<{ Bindings: Env; Variables: AppVars }>();
 
 app.put("/db/migrate/", async (c) => {
   const db = c.env.db;
+  // @ts-ignore
   await db.dialect.migrate(migrations, db.session);
   return c.text("DONE");
 });

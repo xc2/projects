@@ -13,9 +13,10 @@ interface Env {
   //
   // Example binding to a Queue. Learn more at https://developers.cloudflare.com/queues/javascript-apis/
   // MY_QUEUE: Queue;
-  DB: D1Database;
+  // DB: D1Database;
   CLOUDFLARE_ACCESS_TEAM: string;
   CLOUDFLARE_APP_AUD: string;
+  PG_URL: string;
   [key: `AUTOUPDATE_${string}`]: string;
   [key: PropertyKey]: unknown;
 }

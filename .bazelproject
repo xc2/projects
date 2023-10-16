@@ -17,6 +17,7 @@ directories:
 
 additional_languages:
   typescript
+  javascript
 
 ts_config_rules:
   //watermark:tsconfig

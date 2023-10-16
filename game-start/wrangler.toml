@@ -1,7 +1,9 @@
 name = "game-start"
-main = "worker.js"
+main = "src/worker.js"
 compatibility_date = "2023-08-07"
 send_metrics = false
+node_compat = true
+
 [placement]
 mode = "smart"
 
@@ -15,16 +17,6 @@ CLOUDFLARE_APP_AUD = "5c5149386b2995a65d92d23b2da4fd660844ce03143af24603fc354169
 [env.staging.vars]
 CLOUDFLARE_ACCESS_TEAM = "109cafe"
 CLOUDFLARE_APP_AUD = "5c5149386b2995a65d92d23b2da4fd660844ce03143af24603fc3541695d07b0"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "gateway"
-database_id = "529b72ac-3cad-44ec-aa1b-4cc92aa15d33"
-
-[[env.staging.d1_databases]]
-binding = "DB"
-database_name = "gateway-staging"
-database_id = "92d9573c-08e6-409a-8632-c7cd3cd9c2dc"
 
 # Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
 # Docs: https://developers.cloudflare.com/workers/runtime-apis/kv

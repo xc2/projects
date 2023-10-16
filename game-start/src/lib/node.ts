@@ -1,15 +1,14 @@
-import { DrizzleD1DB } from "./drizzle-d1";
+import { NodePgDatabase } from "drizzle-orm/node-postgres";
 import { ShadowsocksNode } from "./types";
 import { NodeTypeEnum } from "surgio/build/types";
 import { nodes, NodesInsert } from "../db/schema";
 import { desc, eq, sql } from "drizzle-orm";
 import { sortBy } from "lodash";
 import { createPaginationQuery, PaginationParam } from "./pagination";
-import { id } from "./utils";
 
 export class NodeService {
   private pagination = createPaginationQuery();
-  constructor(private readonly db: DrizzleD1DB<{ nodes: nodes }>) {}
+  constructor(private readonly db: NodePgDatabase<{ nodes: nodes }>) {}
 
   async list(pagination?: PaginationParam) {
     const [{ count }] = await this.db
@@ -30,8 +29,7 @@ export class NodeService {
   }
 
   async create({ key: _, createdAt, updatedAt, ...node }: NodesInsert) {
-    const key = id();
-    const model = { ...node, key };
+    const model = { ...node };
     const [r] = await this.db.insert(nodes).values(model).returning();
     return r;
   }
@@ -61,13 +59,12 @@ export class NodeService {
     const all = await this.db
       .select()
       .from(nodes)
-      .where(eq(nodes.disabled, false))
-      .all();
+      .where(eq(nodes.disabled, false));
     return sortBy(all, [
       (node) => (node.priority === 0 ? 0 : node.priority || 100),
-    ]).map<ShadowsocksNode>((node) => {
+    ]).map((node) => {
       return {
-        key: node.key,
+        key: `${node.key}`,
         type: NodeTypeEnum.Shadowsocks,
         nodeName: node.title,
         hostname: node.hostname,
@@ -75,7 +72,7 @@ export class NodeService {
         method: node.method,
         udpRelay: node.udp,
         password: node.sharedKey,
-      };
+      } satisfies ShadowsocksNode;
     });
   }
 }

@@ -76,6 +76,8 @@ use_node_modules(name = "shadcn", package = "//tools/shadcn")
 use_node_modules(name = "pwa", package = "//tools/pwa")
 use_node_modules(name = "drizzle", package = "//tools/drizzle")
 use_node_modules(name = "jsts", package = "//tools/jsts")
+use_node_modules(name = "prisma", package = "//tools/prisma")
+use_node_modules(name = "supabase", package = "//tools/supabase")
 
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
 use_repo(npm, *npm_repos)

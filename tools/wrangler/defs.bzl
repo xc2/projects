@@ -19,17 +19,7 @@ def pages_deploy(src, project, name = None):
         tags = ["deliverable"],
     )
 
-def worker(src, platform = "browser", data = [], dev_data = [], bundle = {}, dev = {}):
-    _esbuild(
-        name = "bundle",
-        srcs = [src],
-        entry_point = "{}:worker.js".format(src),
-        format = "esm",
-        output = "worker.js",
-        target = "es2022",
-        platform = platform,
-        **bundle
-    )
+def worker(src, platform = "browser", format = "esm", data = [], dev_data = [], dev = {}):
     _bin.wrangler_binary(
         name = "_wrangler_dev",
         chdir = native.package_name(),
@@ -37,20 +27,19 @@ def worker(src, platform = "browser", data = [], dev_data = [], bundle = {}, dev
             "dev",
             "--persist-to",
             "$$BUILD_WORKSPACE_DIRECTORY/{}/.devstate".format(native.package_name()),
-        ]
+        ],
     )
 
     js_run_devserver(
         name = "dev",
         data = [
-            ":bundle",
-            "wrangler.toml"
+            src,
+            "wrangler.toml",
         ] + data + dev_data,
         args = [
-            "--no-bundle",
             "--ip",
             "127.0.0.1",
-            "worker.js",
+            "src/worker.js",
         ],
         tool = ":_wrangler_dev",
         **dev
@@ -59,11 +48,10 @@ def worker(src, platform = "browser", data = [], dev_data = [], bundle = {}, dev
     _bin.wrangler_binary(
         name = "deploy",
         chdir = native.package_name(),
-        data = [":bundle", "wrangler.toml"],
+        data = [src, "wrangler.toml"],
         args = [
             "deploy",
-            "--no-bundle",
-            "worker.js",
+            "src/worker.js",
         ],
         tags = ["deliverable"],
     )
@@ -71,13 +59,12 @@ def worker(src, platform = "browser", data = [], dev_data = [], bundle = {}, dev
     _bin.wrangler_binary(
         name = "deploy_staging",
         chdir = native.package_name(),
-        data = [":bundle", "wrangler.toml"] + data,
+        data = [src, "wrangler.toml"] + data,
         args = [
             "deploy",
-            "--no-bundle",
-            "worker.js",
+            "src/worker.js",
             "--env",
-            "staging"
+            "staging",
         ],
         tags = ["deliverable"],
     )

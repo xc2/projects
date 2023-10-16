@@ -1,12 +1,12 @@
 {
   "version": "5",
-  "dialect": "sqlite",
+  "dialect": "pg",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1695882150091,
-      "tag": "0000_flowery_madrox",
+      "when": 1697475318074,
+      "tag": "0000_clumsy_invaders",
       "breakpoints": true
     }
   ]

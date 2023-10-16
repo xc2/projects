@@ -1,33 +1,32 @@
 {
   "version": "5",
-  "dialect": "sqlite",
-  "id": "6bbfe188-e9bc-4f36-9d86-549aa40c6063",
+  "dialect": "pg",
+  "id": "30034966-bd27-4ea3-8126-b7764400f92c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "nodes": {
       "name": "nodes",
+      "schema": "",
       "columns": {
         "key": {
           "name": "key",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "default": "gen_random_uuid()"
         },
         "title": {
           "name": "title",
-          "type": "text",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
           "default": "''"
         },
         "hostname": {
           "name": "hostname",
-          "type": "text",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
           "default": "''"
         },
         "port": {
@@ -35,81 +34,88 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
           "default": 0
         },
         "tags": {
           "name": "tags",
-          "type": "text",
+          "type": "varchar(256)[]",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "''"
+          "default": "'{}'"
         },
         "priority": {
           "name": "priority",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
           "default": 100
         },
         "shared_key": {
           "name": "shared_key",
-          "type": "text",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
           "default": "''"
         },
         "method": {
           "name": "method",
-          "type": "text",
+          "type": "ciphers",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
           "default": "'aes-128-gcm'"
         },
         "udp": {
           "name": "udp",
-          "type": "integer",
+          "type": "boolean",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
           "default": false
         },
         "disabled": {
           "name": "disabled",
-          "type": "integer",
+          "type": "boolean",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
           "default": false
         },
         "created_at": {
           "name": "created_at",
-          "type": "datetime",
+          "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
+          "notNull": true,
+          "default": "now()"
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "datetime",
+          "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))"
+          "notNull": true,
+          "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "hostname_idx": {
+          "name": "hostname_idx",
+          "columns": ["hostname"],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "ciphers": {
+      "name": "ciphers",
+      "values": {
+        "aes-128-gcm": "aes-128-gcm",
+        "aes-256-gcm": "aes-256-gcm",
+        "chacha20-ietf-poly1305": "chacha20-ietf-poly1305"
+      }
+    }
+  },
+  "schemas": {},
   "_meta": {
     "schemas": {},
     "tables": {},
