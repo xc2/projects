@@ -2,7 +2,7 @@ import {
   boolean,
   integer,
   pgEnum,
-  pgTable,
+  pgSchema,
   uuid,
   timestamp,
   varchar,
@@ -10,13 +10,15 @@ import {
 } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel, sql } from "drizzle-orm";
 
-export const ciphersEnum = pgEnum("ciphers", [
+export const root = pgSchema("gss");
+
+export const ciphersEnum = pgEnum("ss_ciphers", [
   "aes-128-gcm",
   "aes-256-gcm",
   "chacha20-ietf-poly1305",
 ]);
 
-export const nodes = pgTable(
+export const nodes = root.table(
   "nodes",
   {
     key: uuid("key").primaryKey().defaultRandom(),

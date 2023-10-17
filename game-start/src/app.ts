@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { CloudflareAccess, NodeService } from "./lib";
+import { CloudflareAccess, createOnUpdateAt, NodeService } from "./lib";
 import { migrations } from "./db/migrations";
 import { AuthMiddleware } from "./middlewares/auth";
 import {
@@ -8,7 +8,7 @@ import {
   getShadowRocketConfig,
 } from "./render";
 import { stringify } from "yaml";
-import { FullSchema } from "./db/schema";
+import { FullSchema, nodes } from "./db/schema";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
 
 declare global {
@@ -26,6 +26,7 @@ app.put("/db/migrate/", async (c) => {
   const db = c.env.db;
   // @ts-ignore
   await db.dialect.migrate(migrations, db.session);
+  await createOnUpdateAt(db, { nodes });
   return c.text("DONE");
 });
 

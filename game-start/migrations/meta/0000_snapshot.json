@@ -1,12 +1,12 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "30034966-bd27-4ea3-8126-b7764400f92c",
+  "id": "c403ea07-8ca9-431c-ae76-61020d6f8217",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "nodes": {
       "name": "nodes",
-      "schema": "",
+      "schema": "gss",
       "columns": {
         "key": {
           "name": "key",
@@ -59,7 +59,7 @@
         },
         "method": {
           "name": "method",
-          "type": "ciphers",
+          "type": "ss_ciphers",
           "primaryKey": false,
           "notNull": false,
           "default": "'aes-128-gcm'"
@@ -106,8 +106,8 @@
     }
   },
   "enums": {
-    "ciphers": {
-      "name": "ciphers",
+    "ss_ciphers": {
+      "name": "ss_ciphers",
       "values": {
         "aes-128-gcm": "aes-128-gcm",
         "aes-256-gcm": "aes-256-gcm",
@@ -115,7 +115,9 @@
       }
     }
   },
-  "schemas": {},
+  "schemas": {
+    "gss": "gss"
+  },
   "_meta": {
     "schemas": {},
     "tables": {},

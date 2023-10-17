@@ -17,6 +17,7 @@ ts_project(
         "lib/index.ts",
         "lib/node.ts",
         "lib/pagination.ts",
+        "lib/pg.ts",
         "lib/types.ts",
         "middlewares/auth.ts",
         "render.ts",
