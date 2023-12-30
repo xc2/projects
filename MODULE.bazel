@@ -65,9 +65,9 @@ use_repo(node, "nodejs")
 use_npm_package_bin(
     name = "pnpm",
     entry_point = "dist/pnpm.cjs",
-    integrity = "sha512-uMaWGXlvG+m5NIJaR4JEEenChbg+1AP4zVpqs4PEcZg4uH+lXMTd/X/lirKZA+TC0w0d+++y3btINcwyKsuwAA==",
+    integrity = "sha512-dYvrxpictkYsUTgSmEAZOxDCWN3NsKtD7g753Yd4S8IY1uQctb7qw2K4zjPx+LCAJbWZkzwLzoIFCpo2uEdNQw==",
     run_name = "pnpm",
-    version = "8.6.0",
+    version = "8.13.1",
 )
 
 use_node_modules(name = "npm")

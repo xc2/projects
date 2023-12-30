@@ -2,9 +2,9 @@
   "private": true,
   "scripts": {},
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230821.0",
-    "itty-router": "^4.0.22",
-    "typescript": "^5.2.2"
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "itty-router": "^4.0.25",
+    "typescript": "^5.3.3"
   },
   "dependencies": {}
 }

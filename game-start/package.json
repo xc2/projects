@@ -4,15 +4,15 @@
     "gendb": "bazel run //game-start:gendb && bazel run -- @nodejs//:node gen-migrations-meta.mjs"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230821.0",
-    "typescript": "^5.2.2",
-    "surgio": "^3.0.2",
-    "yaml": "^2.3.2",
-    "drizzle-orm": "^0.28.6",
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "typescript": "^5.3.3",
+    "surgio": "^3.2.3",
+    "yaml": "^2.3.4",
+    "drizzle-orm": "^0.29.2",
     "lodash": "^4.17.21",
-    "@types/lodash": "^4.14.199",
-    "hono": "^3.7.2",
-    "jose": "^4.14.6",
+    "@types/lodash": "^4.14.202",
+    "hono": "^3.11.11",
+    "jose": "^5.2.0",
     "pg": "^8.11.3"
   },
   "dependencies": {}
