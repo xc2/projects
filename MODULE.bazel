@@ -6,6 +6,7 @@ def use_npm_package_bin(name, version, integrity, entry_point, package = None, r
     package = package or name
     npm.npm_import(
         name = name,
+        #        extract_full_archive = True,
         extra_build_content = "\n".join([
             """load("@aspect_rules_js//js:defs.bzl", "js_binary")""",
             "",
@@ -45,32 +46,47 @@ def use_node_modules(name, package = None, npmrc = None, pnpm_lock = None, **kwa
 
 # https://bazel.build/rules/lib/globals/module
 # https://registry.bazel.build
-bazel_dep(name = "aspect_bazel_lib", version = "1.39.0")
-bazel_dep(name = "aspect_rules_js", version = "1.34.1")
-bazel_dep(name = "aspect_rules_swc", version = "1.1.0")
-bazel_dep(name = "aspect_rules_ts", version = "2.1.0")
+bazel_dep(name = "aspect_bazel_lib", version = "2.6.1")
+bazel_dep(name = "aspect_rules_js", version = "1.39.1")
+bazel_dep(name = "aspect_rules_swc", version = "1.2.2")
+bazel_dep(name = "aspect_rules_ts", version = "2.2.0")
 bazel_dep(name = "bazel_skylib", version = "1.5.0")
-bazel_dep(name = "aspect_rules_esbuild", version = "0.16.0")
+bazel_dep(name = "aspect_rules_esbuild", version = "0.19.0")
 
 ####### Node.js version #########
 # By default you get the node version from DEFAULT_NODE_VERSION in @rules_nodejs//nodejs:repositories.bzl
 # Optionally you can pin a different node version:
-bazel_dep(name = "rules_nodejs", version = "6.0.2")
+bazel_dep(name = "rules_nodejs", version = "6.0.5")
 
 node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
-node.toolchain(node_version = "18.18.0")
+node.toolchain(node_version = "20.11.1")
 use_repo(node, "nodejs")
 
 #################################
 use_npm_package_bin(
     name = "pnpm",
-    entry_point = "dist/pnpm.cjs",
-    integrity = "sha512-dYvrxpictkYsUTgSmEAZOxDCWN3NsKtD7g753Yd4S8IY1uQctb7qw2K4zjPx+LCAJbWZkzwLzoIFCpo2uEdNQw==",
+    entry_point = "bin/pnpm.cjs",
+    integrity = "sha512-d7iem+d6Kwatj0A6Gcrl4il29hAj+YrTI9XDAZSVjrwC7gpq5dE+5FT2E05OjK8poF8LGg4dKxe8prah8RWfhg==",
     run_name = "pnpm",
-    version = "8.13.1",
+    version = "8.15.6",
 )
 
 use_node_modules(name = "npm")
+
+use_node_modules(
+    name = "game-start-npm",
+    package = "//game-start",
+)
+
+use_node_modules(
+    name = "ros-scripts-npm",
+    package = "//ros-scripts",
+)
+
+use_node_modules(
+    name = "watermark-npm",
+    package = "//watermark",
+)
 
 use_node_modules(
     name = "wrangler",

@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "composite": true,
     "lib": ["es2023"],
     "module": "ESNext",
     "target": "es2022",

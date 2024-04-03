@@ -1,4 +1,4 @@
-load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@game-start-npm//:defs.bzl", "npm_link_all_packages")
 load("//tools/wrangler:defs.bzl", "worker")
 load("//tools/drizzle:defs.bzl", "gendb")
 

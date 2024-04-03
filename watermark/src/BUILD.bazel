@@ -30,7 +30,6 @@ ts_project(
         "lib/constants.ts",
         "lib/use-image-element.ts",
         "main.tsx",
-        "vite-env.d.ts",
     ],
     declaration = True,
     incremental = True,
