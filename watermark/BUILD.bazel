@@ -27,13 +27,14 @@ ts_project(
     name = "bundle-configs",
     srcs = [
         "postcss.config.ts",
-        "rsbuild.config.ts",
+        "rsbuild.config.mts",
         "tailwind.config.ts",
     ],
     composite = True,
     tsconfig = ":node-tsconfig",
     deps = [
         ":node_modules/@rsbuild/core",
+        ":node_modules/@types/node",
         ":node_modules/tailwindcss",
         ":node_modules/tailwindcss-animate",
     ],
