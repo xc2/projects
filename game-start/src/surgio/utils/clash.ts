@@ -1,23 +1,15 @@
 import { omit } from "lodash";
 import { NodeTypeEnum, PossibleNodeConfigType } from "surgio/build/types";
-import {
-  checkNotNullish,
-  getHostnameFromHost,
-  getPortFromHost,
-  pickAndFormatKeys,
-} from "./utils";
+import { checkNotNullish, getHostnameFromHost, getPortFromHost, pickAndFormatKeys } from "./utils";
 
 const logger = console;
 
-export const getClashNodes = function (
-  list: ReadonlyArray<PossibleNodeConfigType>,
-) {
-  return list
+export const getClashNodes = (list: ReadonlyArray<PossibleNodeConfigType>) =>
+  list
     .map(nodeListMapper)
     .filter((item): item is NonNullable<ReturnType<typeof nodeListMapper>> =>
-      checkNotNullish(item),
+      checkNotNullish(item)
     );
-};
 
 function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
   switch (nodeConfig.type) {
@@ -25,7 +17,7 @@ function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
       // Istanbul ignore next
       if (nodeConfig.shadowTls && !nodeConfig.clashConfig?.enableShadowTls) {
         logger.warn(
-          `尚未开启 Clash 的 shadow-tls 支持，节点 ${nodeConfig.nodeName} 将被忽略。如需开启，请在配置文件中设置 clashConfig.enableShadowTls 为 true。`,
+          `尚未开启 Clash 的 shadow-tls 支持，节点 ${nodeConfig.nodeName} 将被忽略。如需开启，请在配置文件中设置 clashConfig.enableShadowTls 为 true。`
         );
         return null;
       }
@@ -33,7 +25,7 @@ function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
       // Istanbul ignore next
       if (nodeConfig.shadowTls && nodeConfig.obfs) {
         logger.warn(
-          `Clash 不支持同时开启 shadow-tls 和 obfs，节点 ${nodeConfig.nodeName} 将被忽略。`,
+          `Clash 不支持同时开启 shadow-tls 和 obfs，节点 ${nodeConfig.nodeName} 将被忽略。`
         );
         return null;
       }
@@ -61,16 +53,14 @@ function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
               "plugin-opts": {
                 mode: "websocket",
                 tls: nodeConfig.obfs === "wss",
-                ...(typeof nodeConfig.skipCertVerify === "boolean" &&
-                nodeConfig.obfs === "wss"
+                ...(typeof nodeConfig.skipCertVerify === "boolean" && nodeConfig.obfs === "wss"
                   ? {
                       "skip-cert-verify": nodeConfig.skipCertVerify,
                     }
                   : null),
                 host: nodeConfig.obfsHost,
                 path: nodeConfig.obfsUri || "/",
-                mux:
-                  typeof nodeConfig.mux === "boolean" ? nodeConfig.mux : false,
+                mux: typeof nodeConfig.mux === "boolean" ? nodeConfig.mux : false,
                 headers: omit(nodeConfig.wsHeaders || {}, ["host"]),
               },
             }
@@ -84,9 +74,7 @@ function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
                 ...(nodeConfig.shadowTls.version
                   ? { version: nodeConfig.shadowTls.version }
                   : null),
-                ...(nodeConfig.shadowTls.sni
-                  ? { host: nodeConfig.shadowTls.sni }
-                  : null),
+                ...(nodeConfig.shadowTls.sni ? { host: nodeConfig.shadowTls.sni } : null),
               },
             }
           : null),
@@ -146,7 +134,7 @@ function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
       // Istanbul ignore next
       if (Number(nodeConfig.version) >= 4) {
         logger.warn(
-          `Clash 尚不支持 Snell v${nodeConfig.version}，节点 ${nodeConfig.nodeName} 会被省略。`,
+          `Clash 尚不支持 Snell v${nodeConfig.version}，节点 ${nodeConfig.nodeName} 会被省略。`
         );
         return null;
       }
@@ -224,29 +212,25 @@ function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
         port: nodeConfig.port,
         ...(nodeConfig.username ? { username: nodeConfig.username } : null),
         ...(nodeConfig.password ? { password: nodeConfig.password } : null),
-        ...(typeof nodeConfig.tls === "boolean"
-          ? { tls: nodeConfig.tls }
-          : null),
+        ...(typeof nodeConfig.tls === "boolean" ? { tls: nodeConfig.tls } : null),
         ...(typeof nodeConfig.skipCertVerify === "boolean"
           ? { "skip-cert-verify": nodeConfig.skipCertVerify }
           : null),
-        ...(typeof nodeConfig.udpRelay === "boolean"
-          ? { udp: nodeConfig.udpRelay }
-          : null),
+        ...(typeof nodeConfig.udpRelay === "boolean" ? { udp: nodeConfig.udpRelay } : null),
       } as const;
 
     case NodeTypeEnum.Tuic:
       // Istanbul ignore next
       if (!nodeConfig.clashConfig?.enableTuic) {
         logger.warn(
-          `尚未开启 Clash 的 TUIC 支持，节点 ${nodeConfig.nodeName} 会被省略。如需开启，请在配置文件中设置 clashConfig.enableTuic 为 true。`,
+          `尚未开启 Clash 的 TUIC 支持，节点 ${nodeConfig.nodeName} 会被省略。如需开启，请在配置文件中设置 clashConfig.enableTuic 为 true。`
         );
         return null;
       }
       // Istanbul ignore next
       if (nodeConfig.alpn && !nodeConfig.alpn.length) {
         logger.warn(
-          `节点 ${nodeConfig.nodeName} 的 alpn 为空。Stash 客户端不支持 ALPN 为空，默认的 ALPN 为 h3。`,
+          `节点 ${nodeConfig.nodeName} 的 alpn 为空。Stash 客户端不支持 ALPN 为空，默认的 ALPN 为 h3。`
         );
       }
 
@@ -262,7 +246,7 @@ function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
             ["password", "uuid", "sni", "skipCertVerify", "version"],
             {
               keyFormat: "kebabCase",
-            },
+            }
           ),
           ...(nodeConfig.alpn ? { alpn: nodeConfig.alpn } : null),
         } as const;
@@ -274,13 +258,9 @@ function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
         server: nodeConfig.hostname,
         port: nodeConfig.port,
         udp: true,
-        ...pickAndFormatKeys(
-          nodeConfig,
-          ["token", "sni", "skipCertVerify", "version"],
-          {
-            keyFormat: "kebabCase",
-          },
-        ),
+        ...pickAndFormatKeys(nodeConfig, ["token", "sni", "skipCertVerify", "version"], {
+          keyFormat: "kebabCase",
+        }),
         ...(nodeConfig.alpn ? { alpn: nodeConfig.alpn } : null),
       } as const;
 
@@ -288,7 +268,7 @@ function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
       // istanbul ignore next
       if (nodeConfig.peers.length > 1) {
         logger.warn(
-          `节点 ${nodeConfig.nodeName} 有多个 WireGuard Peer，然而 Stash 或 Clash 仅支持一个 Peer，因此只会使用第一个 Peer。`,
+          `节点 ${nodeConfig.nodeName} 有多个 WireGuard Peer，然而 Stash 或 Clash 仅支持一个 Peer，因此只会使用第一个 Peer。`
         );
       }
 
@@ -321,7 +301,7 @@ function nodeListMapper(nodeConfig: PossibleNodeConfigType) {
       logger.warn(
         `不支持为 Clash 生成 ${(nodeConfig as any).type} 的节点，节点 ${
           (nodeConfig as any).nodeName
-        } 会被省略`,
+        } 会被省略`
       );
       return null;
   }

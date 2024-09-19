@@ -1,7 +1,7 @@
+import { NodeTypeEnum, ProxyNode, ShadowsocksNode } from "./lib";
 import { getClashNodes } from "./surgio/utils/clash";
-import { ProxyNode, ShadowsocksNode, NodeTypeEnum } from "./lib";
-import { hasTag } from "./tags";
 import { getQuantumultXNodes } from "./surgio/utils/quantumult";
+import { hasTag } from "./tags";
 
 function isShadowsocksNode(node: ProxyNode): node is ShadowsocksNode {
   return node.type === NodeTypeEnum.Shadowsocks;
@@ -9,7 +9,7 @@ function isShadowsocksNode(node: ProxyNode): node is ShadowsocksNode {
 
 export function getQuantumultXConfig(nodes: ProxyNode[]) {
   const _nodes = nodes.filter(
-    (node) => node.enable !== false && !hasTag(node.tags, "quantumult:no"),
+    (node) => node.enable !== false && !hasTag(node.tags, "quantumult:no")
   );
   const proxies = getQuantumultXNodes(_nodes);
   return `
@@ -52,9 +52,7 @@ final, fallback
 }
 
 export function getClashConfig(nodes: ProxyNode[]) {
-  const _nodes = nodes.filter(
-    (node) => node.enable !== false && !hasTag(node.tags, "clash:no"),
-  );
+  const _nodes = nodes.filter((node) => node.enable !== false && !hasTag(node.tags, "clash:no"));
   const clashProxies = getClashNodes(_nodes);
   return {
     proxies: [...clashProxies],

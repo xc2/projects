@@ -1,14 +1,14 @@
+import { InferInsertModel, InferSelectModel, sql } from "drizzle-orm";
 import {
   boolean,
+  index,
   integer,
   pgEnum,
   pgSchema,
-  uuid,
   timestamp,
+  uuid,
   varchar,
-  index,
 } from "drizzle-orm/pg-core";
-import { InferInsertModel, InferSelectModel, sql } from "drizzle-orm";
 
 export const root = pgSchema("gss");
 
@@ -25,9 +25,7 @@ export const nodes = root.table(
     title: varchar("title", { length: 256 }).notNull().default(""),
     hostname: varchar("hostname", { length: 256 }).notNull().default(""),
     port: integer("port").notNull().default(0),
-    tags: varchar("tags", { length: 256 })
-      .array()
-      .default(sql`'{}'`),
+    tags: varchar("tags", { length: 256 }).array().default(sql`'{}'`),
     priority: integer("priority").default(100),
     sharedKey: varchar("shared_key", { length: 256 }).notNull().default(""),
     method: ciphersEnum("method").default("aes-128-gcm"),
@@ -38,7 +36,7 @@ export const nodes = root.table(
   },
   (table) => {
     return { hostnameIdx: index("hostname_idx").on(table.hostname) };
-  },
+  }
 );
 
 export type nodes = typeof nodes;

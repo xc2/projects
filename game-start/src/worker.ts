@@ -1,3 +1,4 @@
+import { drizzle } from "drizzle-orm/node-postgres";
 /**
  * Welcome to Cloudflare Workers! This is your first worker.
  *
@@ -8,21 +9,16 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 import { Pool } from "pg";
-import { drizzle } from "drizzle-orm/node-postgres";
 
-import { CloudflareAccess, NodeService } from "./lib";
 import { app } from "./app";
 import * as schema from "./db/schema";
+import { CloudflareAccess, NodeService } from "./lib";
 
 // Export a default object containing event handlers
 export default {
   // The fetch handler is invoked when this worker receives a HTTP(S) request
   // and should return a Response (optionally wrapped in a Promise)
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext,
-  ): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const pool = new Pool({ connectionString: env.PG_URL });
     const db = drizzle(pool, { schema });
     const node = new NodeService(db);

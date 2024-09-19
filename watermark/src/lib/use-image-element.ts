@@ -29,6 +29,6 @@ export function useImageElement(file: Blob | null | undefined) {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
       keepPreviousData: false,
-    },
+    }
   );
 }

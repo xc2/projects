@@ -6,29 +6,25 @@ export const pickAndFormatStringList = (
   options: {
     keyFormat?: "camelCase" | "snakeCase" | "kebabCase";
     stringifyValue?: boolean;
-  } = {},
+  } = {}
 ): readonly string[] => {
   const result: string[] = [];
   const { keyFormat, stringifyValue } = options;
 
   keyList.forEach((key) => {
-    if (obj.hasOwnProperty(key)) {
+    if (Object.hasOwn(obj, key)) {
       const propertyKey = keyFormat ? changeCase(key, keyFormat) : key;
       const propertyValue = obj[key];
 
       if (Array.isArray(propertyValue)) {
         result.push(
           `${propertyKey}=${
-            stringifyValue
-              ? JSON.stringify(propertyValue.join(","))
-              : propertyValue.join(",")
-          }`,
+            stringifyValue ? JSON.stringify(propertyValue.join(",")) : propertyValue.join(",")
+          }`
         );
       } else {
         result.push(
-          `${propertyKey}=${
-            stringifyValue ? JSON.stringify(propertyValue) : propertyValue
-          }`,
+          `${propertyKey}=${stringifyValue ? JSON.stringify(propertyValue) : propertyValue}`
         );
       }
     }
@@ -40,7 +36,7 @@ export const pickAndFormatStringList = (
 // istanbul ignore next
 export const changeCase = (
   str: string,
-  format: "camelCase" | "snakeCase" | "kebabCase",
+  format: "camelCase" | "snakeCase" | "kebabCase"
 ): string => {
   switch (format) {
     case "camelCase":
@@ -57,15 +53,13 @@ export const pickAndFormatKeys = (
   keyList: readonly string[],
   options: {
     keyFormat?: "camelCase" | "snakeCase" | "kebabCase";
-  } = {},
+  } = {}
 ): Record<string, any> => {
   const result: Record<string, any> = {};
 
   keyList.forEach((key) => {
-    if (obj.hasOwnProperty(key)) {
-      const propertyKey = options.keyFormat
-        ? changeCase(key, options.keyFormat)
-        : key;
+    if (Object.hasOwn(obj, key)) {
+      const propertyKey = options.keyFormat ? changeCase(key, options.keyFormat) : key;
       result[propertyKey] = obj[key];
     }
   });
@@ -73,8 +67,7 @@ export const pickAndFormatKeys = (
   return result;
 };
 
-export const checkNotNullish = (val: unknown): boolean =>
-  val !== null && val !== undefined;
+export const checkNotNullish = (val: unknown): boolean => val !== null && val !== undefined;
 
 export const getPortFromHost = (host: string): number => {
   const match = host.match(/:(\d+)$/);

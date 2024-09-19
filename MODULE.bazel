@@ -1,135 +1,181 @@
-npm_repos = []
+# npm_repos = []
 
-def use_npm_package_bin(name, version, integrity, entry_point, package = None, run_name = "bin", proxy = None, **kwargs):
-    npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
+#def use_npm_package_bin(name, version, integrity, entry_point, package = None, run_name = "bin", proxy = None, **kwargs):
+#    npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
+#
+#    package = package or name
+#    npm.npm_import(
+#        name = name,
+#        #        extract_full_archive = True,
+#        extra_build_content = "\n".join([
+#            """load("@aspect_rules_js//js:defs.bzl", "js_binary")""",
+#            "",
+#            """js_binary(""",
+#            """  name = "{}",""".format(run_name),
+#            """  data = [":package"],""",
+#            """  entry_point = ":package/{}",""".format(entry_point),
+#            """  copy_data_to_bin = False,""",
+#            """  visibility = ["//visibility:public"],""",
+#            """  chdir = "$$BUILD_WORKING_DIRECTORY",""",
+#            """)""",
+#            "",
+#        ]),
+#        # npm info <pkg>@<version> dist.integrity
+#        integrity = integrity,
+#        package = package,
+#        version = version,
+#        **kwargs
+#    )
+#    npm_repos.append(name)
 
-    package = package or name
-    npm.npm_import(
-        name = name,
-        #        extract_full_archive = True,
-        extra_build_content = "\n".join([
-            """load("@aspect_rules_js//js:defs.bzl", "js_binary")""",
-            "",
-            """js_binary(""",
-            """  name = "{}",""".format(run_name),
-            """  data = [":package"],""",
-            """  entry_point = ":package/{}",""".format(entry_point),
-            """  copy_data_to_bin = False,""",
-            """  visibility = ["//visibility:public"],""",
-            """  chdir = "$$BUILD_WORKING_DIRECTORY",""",
-            """)""",
-            "",
-        ]),
-        # npm info <pkg>@<version> dist.integrity
-        integrity = integrity,
-        package = package,
-        version = version,
-        **kwargs
-    )
-    npm_repos.append(name)
+# def use_node_modules(name, package = None, npmrc = None, pnpm_lock = None, **kwargs):
+#     npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
 
-def use_node_modules(name, package = None, npmrc = None, pnpm_lock = None, **kwargs):
-    npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
+#     package = package or "//"
+#     pnpm_lock = pnpm_lock or "{}:pnpm-lock.yaml".format(package)
+#     npmrc = npmrc or "//:.npmrc"
+#     npm.npm_translate_lock(
+#         name = name,
+#         npmrc = npmrc,
+#         verify_node_modules_ignored = "//:.bazelignore",
+#         pnpm_lock = pnpm_lock,
+#         **kwargs
+#     )
 
-    package = package or "//"
-    pnpm_lock = pnpm_lock or "{}:pnpm-lock.yaml".format(package)
-    npmrc = npmrc or "//:.npmrc"
-    npm.npm_translate_lock(
-        name = name,
-        npmrc = npmrc,
-        verify_node_modules_ignored = "//:.bazelignore",
-        pnpm_lock = pnpm_lock,
-        **kwargs
-    )
-
-    npm_repos.append(name)
+#     npm_repos.append(name)
 
 # https://bazel.build/rules/lib/globals/module
 # https://registry.bazel.build
-bazel_dep(name = "aspect_bazel_lib", version = "2.6.1")
-bazel_dep(name = "aspect_rules_js", version = "1.39.1")
-bazel_dep(name = "aspect_rules_swc", version = "1.2.2")
-bazel_dep(name = "aspect_rules_ts", version = "2.2.0")
-bazel_dep(name = "bazel_skylib", version = "1.5.0")
-bazel_dep(name = "aspect_rules_esbuild", version = "0.19.0")
+bazel_dep(name = "aspect_bazel_lib", version = "2.8.1")
+bazel_dep(name = "aspect_rules_js", version = "2.0.1")
+bazel_dep(name = "aspect_rules_swc", version = "2.0.0")
+bazel_dep(name = "aspect_rules_ts", version = "3.1.0")
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "aspect_rules_esbuild", version = "0.21.0")
 
 ####### Node.js version #########
 # By default you get the node version from DEFAULT_NODE_VERSION in @rules_nodejs//nodejs:repositories.bzl
 # Optionally you can pin a different node version:
-bazel_dep(name = "rules_nodejs", version = "6.0.5")
+bazel_dep(name = "rules_nodejs", version = "6.3.0")
 
 node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
 node.toolchain(node_version = "20.11.1")
 use_repo(node, "nodejs")
 
 #################################
-use_npm_package_bin(
+#use_npm_package_bin(
+#    name = "pnpm",
+#    entry_point = "bin/pnpm.cjs",
+#    integrity = "sha512-c6Ka+jag0JLs5Scd5Rd+y/gxjUVOzXATQxMbjrwMGpHEh9pGq3fI5ZbWrPFGHjWUztS+zt+JIbB0+9hlPtcFHA==",
+#    run_name = "pnpm",
+#    version = "9.10.0",
+#)
+
+
+pnpm = use_extension("@aspect_rules_js//npm:extensions.bzl", "pnpm")
+pnpm.pnpm(
     name = "pnpm",
-    entry_point = "bin/pnpm.cjs",
-    integrity = "sha512-d7iem+d6Kwatj0A6Gcrl4il29hAj+YrTI9XDAZSVjrwC7gpq5dE+5FT2E05OjK8poF8LGg4dKxe8prah8RWfhg==",
-    run_name = "pnpm",
-    version = "8.15.6",
+    pnpm_version = "9.10.0",
+    pnpm_version_integrity = "sha512-c6Ka+jag0JLs5Scd5Rd+y/gxjUVOzXATQxMbjrwMGpHEh9pGq3fI5ZbWrPFGHjWUztS+zt+JIbB0+9hlPtcFHA==",
 )
-
-use_node_modules(name = "npm")
-
-use_node_modules(
-    name = "game-start-npm",
-    package = "//game-start",
-)
-
-use_node_modules(
-    name = "ros-scripts-npm",
-    package = "//ros-scripts",
-)
-
-use_node_modules(
-    name = "watermark-npm",
-    package = "//watermark",
-)
-
-use_node_modules(
-    name = "wrangler",
-    package = "//tools/wrangler",
-)
-
-use_node_modules(
-    name = "lint",
-    package = "//tools/lint",
-)
-
-use_node_modules(
-    name = "shadcn",
-    package = "//tools/shadcn",
-)
-
-use_node_modules(
-    name = "pwa",
-    package = "//tools/pwa",
-)
-
-use_node_modules(
-    name = "drizzle",
-    package = "//tools/drizzle",
-)
-
-use_node_modules(
-    name = "jsts",
-    package = "//tools/jsts",
-)
-
-use_node_modules(
-    name = "prisma",
-    package = "//tools/prisma",
-)
-
-use_node_modules(
-    name = "supabase",
-    package = "//tools/supabase",
-)
+use_repo(pnpm, "pnpm")
 
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True)
-use_repo(npm, *npm_repos)
+npm.npm_translate_lock(
+    name = "npm",
+    pnpm_lock = "//:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "npm")
+
+npm.npm_translate_lock(
+    name = "game-start-npm",
+    pnpm_lock = "//game-start:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "game-start-npm")
+
+npm.npm_translate_lock(
+    name = "ros-scripts-npm",
+    pnpm_lock = "//ros-scripts:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "ros-scripts-npm")
+
+npm.npm_translate_lock(
+    name = "watermark-npm",
+    pnpm_lock = "//watermark:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "watermark-npm")
+
+npm.npm_translate_lock(
+    name = "wrangler",
+    pnpm_lock = "//tools/wrangler:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "wrangler")
+
+npm.npm_translate_lock(
+    name = "lint",
+    pnpm_lock = "//tools/lint:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "lint")
+
+npm.npm_translate_lock(
+    name = "shadcn",
+    pnpm_lock = "//tools/shadcn:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "shadcn")
+
+npm.npm_translate_lock(
+    name = "pwa",
+    pnpm_lock = "//tools/pwa:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "pwa")
+
+npm.npm_translate_lock(
+    name = "drizzle",
+    pnpm_lock = "//tools/drizzle:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "drizzle")
+
+npm.npm_translate_lock(
+    name = "jsts",
+    pnpm_lock = "//tools/jsts:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "jsts")
+
+npm.npm_translate_lock(
+    name = "prisma",
+    pnpm_lock = "//tools/prisma:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "prisma")
+
+npm.npm_translate_lock(
+    name = "supabase",
+    pnpm_lock = "//tools/supabase:pnpm-lock.yaml",
+    npmrc = "//:.npmrc",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+use_repo(npm, "supabase")
 
 ################################################################################
 # rules_ts

@@ -1,16 +1,7 @@
-import {
-  CanvasHTMLAttributes,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { CanvasHTMLAttributes, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export function useCanvasPool(count: number = 2) {
-  const [canvasElements, setCanvasElements] = useState<
-    (HTMLCanvasElement | null)[]
-  >([]);
+  const [canvasElements, setCanvasElements] = useState<(HTMLCanvasElement | null)[]>([]);
   const [current, setCurrent] = useState(0);
   useEffect(() => {
     setCurrent((current) => (current >= count ? 0 : current));
@@ -27,9 +18,7 @@ export function useCanvasPool(count: number = 2) {
     return canvas;
   }, [canvasElements, current]);
 
-  const renderCanvasElements = (
-    props?: CanvasHTMLAttributes<HTMLCanvasElement>,
-  ) => {
+  const renderCanvasElements = (props?: CanvasHTMLAttributes<HTMLCanvasElement>) => {
     return Array.from({ length: count }, (_, i) => {
       const styles = { ...props?.style };
       if (i !== current) {

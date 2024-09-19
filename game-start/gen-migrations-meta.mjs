@@ -1,7 +1,7 @@
-import { readMigrationFiles } from "drizzle-orm/migrator";
-import { inspect } from "node:util";
 import { writeFileSync } from "node:fs";
 import * as Path from "node:path";
+import { inspect } from "node:util";
+import { readMigrationFiles } from "drizzle-orm/migrator";
 
 function resolvePath(target) {
   const dirname = Path.dirname(new URL(import.meta.url).pathname);

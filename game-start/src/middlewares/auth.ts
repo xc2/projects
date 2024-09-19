@@ -1,7 +1,7 @@
+import { Context, MiddlewareHandler } from "hono";
+import { getCookie } from "hono/cookie";
 import { HTTPException } from "hono/http-exception";
 import { CloudflareJWTPayload } from "../lib";
-import { MiddlewareHandler, Context } from "hono";
-import { getCookie } from "hono/cookie";
 
 declare global {
   interface AppVars {
@@ -16,7 +16,7 @@ function getToken(c: Context) {
   }
 
   const cookie = getCookie(c);
-  return cookie["CF_Authorization"];
+  return cookie.CF_Authorization;
 }
 
 export const AuthMiddleware: MiddlewareHandler<{
@@ -37,10 +37,7 @@ export const AuthMiddleware: MiddlewareHandler<{
     throw new HTTPException(401, { res });
   }
   try {
-    const payload = await env.CloudflareAccess.VerifyJWT(
-      token,
-      env.CLOUDFLARE_APP_AUD,
-    );
+    const payload = await env.CloudflareAccess.VerifyJWT(token, env.CLOUDFLARE_APP_AUD);
     c.set("CloudflareUser", payload);
   } catch (e) {
     const res = new Response("Unauthorized", {

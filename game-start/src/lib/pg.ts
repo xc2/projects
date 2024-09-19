@@ -1,17 +1,17 @@
+import { sql } from "drizzle-orm";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
 import { PgTableWithColumns, TableConfig } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm";
 import { FullSchema } from "../db/schema";
 
-export function isPgTable<T extends TableConfig>(
-  item: any,
-): item is PgTableWithColumns<T> {
+export function isPgTable<T extends TableConfig>(item: any): item is PgTableWithColumns<T> {
   return Boolean(item?.constructor?.Symbol?.Columns);
 }
 export function getPgTableMeta(item: PgTableWithColumns<any>) {
   const v = item as any;
-  const { Name, Schema, OriginalName, BaseName, Columns } = v.constructor
-    .Symbol as Record<string, symbol>;
+  const { Name, Schema, OriginalName, BaseName, Columns } = v.constructor.Symbol as Record<
+    string,
+    symbol
+  >;
   return {
     Name: v[Name] as string,
     Schema: v[Schema] as string,
@@ -21,10 +21,7 @@ export function getPgTableMeta(item: PgTableWithColumns<any>) {
   };
 }
 
-export async function createOnUpdateAt(
-  db: NodePgDatabase<FullSchema>,
-  schema: FullSchema,
-) {
+export async function createOnUpdateAt(db: NodePgDatabase<FullSchema>, schema: FullSchema) {
   const functions = new Set<string>();
   const triggers = new Set<string>();
 
@@ -44,7 +41,7 @@ RETURN NEW;
 END;
 $$ language 'plpgsql'`);
     triggers.add(
-      `CREATE OR REPLACE TRIGGER ${tr} BEFORE UPDATE ON ${tbl} FOR EACH ROW EXECUTE PROCEDURE ${fn}()`,
+      `CREATE OR REPLACE TRIGGER ${tr} BEFORE UPDATE ON ${tbl} FOR EACH ROW EXECUTE PROCEDURE ${fn}()`
     );
   }
 

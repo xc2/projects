@@ -1,4 +1,4 @@
-import { createRemoteJWKSet, JWTPayload, jwtVerify } from "jose";
+import { JWTPayload, createRemoteJWKSet, jwtVerify } from "jose";
 
 export interface CloudflareJWTPayload extends JWTPayload {
   email: string;
@@ -10,7 +10,7 @@ export class CloudflareAccess {
   JWKS: ReturnType<typeof createRemoteJWKSet>;
   constructor(team: string) {
     this.JWKS = createRemoteJWKSet(
-      new URL(`https://${team}.cloudflareaccess.com/cdn-cgi/access/certs`),
+      new URL(`https://${team}.cloudflareaccess.com/cdn-cgi/access/certs`)
     );
   }
   async VerifyJWT(jwt: string, audience: string) {

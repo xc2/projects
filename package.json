@@ -1,18 +1,16 @@
 {
   "scripts": {
     "install-for-dev": "bazel run -- @pnpm//:pnpm install",
-    "prepare": "bazel run //tools/lint:husky install || true"
+    "_prepare": "bazel run //tools/lint:husky install || true"
   },
   "dependencies": {
-    "eslint": "^8.45.0",
-    "prettier": "^3.0.1"
+    "@biomejs/biome": "^1.9.1"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "bazel run -- //:prettier --write"
-    ],
-    "*.{json,prettierrc,swcrc,eslintrc}": [
-      "bazel run -- //:prettier --write"
-    ]
+  "nano-staged": {
+    "*.{js,ts,jsx,tsx,css,scss,mjs,cjs,mts,cts}": "bazel run -- //:biome check --write --diagnostic-level=error --no-errors-on-unmatched"
+  },
+  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c",
+  "pnpm": {
+    "onlyBuiltDependencies": []
   }
 }

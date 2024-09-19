@@ -1,12 +1,6 @@
-import {
-  IRequest,
-  json as asJson,
-  Router,
-  status as asStatus,
-  text as asText,
-} from "itty-router";
-import { getCIDRList } from "./gist";
+import { IRequest, Router, json as asJson, status as asStatus, text as asText } from "itty-router";
 import { getFirewallListScript } from "./firewall";
+import { getCIDRList } from "./gist";
 
 // now let's create a router (note the lack of "new")
 const router = Router<Request & IRequest>();
@@ -20,11 +14,10 @@ router.get("/ip/firewall/list", async (request) => {
   return asText(
     getFirewallListScript({
       name,
-      listName:
-        typeof request.query.list === "string" ? request.query.list : undefined,
+      listName: typeof request.query.list === "string" ? request.query.list : undefined,
       force: request.query.force === "true",
       list,
-    }),
+    })
   );
 });
 

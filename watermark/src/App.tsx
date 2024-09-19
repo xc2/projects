@@ -1,13 +1,13 @@
 import { Field, Input, Select, Slider } from "@fluentui/react-components";
-import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { Upload } from "./components/upload";
+import { FormProvider, useForm } from "react-hook-form";
 import { useCanvasPool } from "./components/canvas-pool";
-import { useImageElement } from "./lib/use-image-element";
-import { fillText, getCanvasRect, getFontSize } from "./lib/canvas";
-import { COMPOSITES, DEFAULT_APP_CONFIG } from "./lib/constants";
 import { createFieldComponent } from "./components/form";
+import { Upload } from "./components/upload";
+import { fillText, getCanvasRect, getFontSize } from "./lib/canvas";
 import { AppConfig } from "./lib/config";
+import { COMPOSITES, DEFAULT_APP_CONFIG } from "./lib/constants";
+import { useImageElement } from "./lib/use-image-element";
 
 export function App() {
   const form = useForm<AppConfig>({
@@ -54,13 +54,7 @@ export function App() {
     ctx.fillStyle = `rgba(255,255,255,${opacity})`;
 
     const font = "sans-serif";
-    const fontSize = getFontSize(
-      ctx,
-      font,
-      text,
-      "height",
-      (40 / 1000) * canvas.width,
-    );
+    const fontSize = getFontSize(ctx, font, text, "height", (40 / 1000) * canvas.width);
     ctx.font = `${fontSize}px ${font}`;
     const rotated = getCanvasRect(imageWidth, imageHeight, radians);
     ctx.save();
@@ -74,7 +68,7 @@ export function App() {
       rotated.translate[0] * -1,
       rotated.translate[1] * -1,
       rotated.right - rotated.left,
-      rotated.descent - rotated.ascent,
+      rotated.descent - rotated.ascent
     );
     ctx.restore();
     canvas.toBlob(
@@ -83,7 +77,7 @@ export function App() {
         setResultImage(url);
       },
       "image/png",
-      1,
+      1
     );
   }, [img, canvas, composite, opacity, text]);
   return (
@@ -94,9 +88,7 @@ export function App() {
         <div className="flex pl-3 pr-3 items-start space-x-2">
           <div className="basis-1/4 sticky top-0 space-y-3">
             <Field>
-              {(props) => (
-                <Upload {...props} onChange={(file) => setCurrentFile(file)} />
-              )}
+              {(props) => <Upload {...props} onChange={(file) => setCurrentFile(file)} />}
             </Field>
 
             <HookField name="processing.watermark.text">
@@ -118,13 +110,7 @@ export function App() {
           </div>
           <div className="flex-auto min-w-0">
             {renderCanvasElements({ style: { display: "none" } })}
-            {!resultImage || (
-              <img
-                alt="result"
-                src={resultImage}
-                style={{ maxWidth: "100%" }}
-              />
-            )}
+            {!resultImage || <img alt="result" src={resultImage} style={{ maxWidth: "100%" }} />}
           </div>
         </div>
       </div>

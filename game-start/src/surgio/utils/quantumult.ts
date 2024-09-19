@@ -9,17 +9,12 @@ const logger = console;
 /**
  * @see https://github.com/crossutility/Quantumult-X/blob/master/sample.conf
  */
-export const getQuantumultXNodes = function (
-  nodeList: ReadonlyArray<PossibleNodeConfigType>,
-): [string, string][] {
-  return nodeList
-    .map(nodeListMapper)
-    .filter((item): item is [string, string] => item !== undefined);
-};
+export const getQuantumultXNodes = (
+  nodeList: ReadonlyArray<PossibleNodeConfigType>
+): [string, string][] =>
+  nodeList.map(nodeListMapper).filter((item): item is [string, string] => item !== undefined);
 
-function nodeListMapper(
-  nodeConfig: PossibleNodeConfigType,
-): [string, string] | undefined {
+function nodeListMapper(nodeConfig: PossibleNodeConfigType): [string, string] | undefined {
   switch (nodeConfig.type) {
     case NodeTypeEnum.Vmess: {
       const config = [
@@ -31,9 +26,7 @@ function nodeListMapper(
         `password=${nodeConfig.uuid}`,
         ...(nodeConfig.udpRelay ? ["udp-relay=true"] : []),
         ...(nodeConfig.tfo ? ["fast-open=true"] : []),
-        ...(nodeConfig.quantumultXConfig?.vmessAEAD
-          ? ["aead=true"]
-          : ["aead=false"]),
+        ...(nodeConfig.quantumultXConfig?.vmessAEAD ? ["aead=true"] : ["aead=false"]),
       ];
 
       switch (nodeConfig.network) {
@@ -80,18 +73,15 @@ function nodeListMapper(
       }
 
       if (typeof nodeConfig.testUrl === "string") {
-        config.push(`server_check_url=${nodeConfig["testUrl"]}`);
+        config.push(`server_check_url=${nodeConfig.testUrl}`);
       }
 
       config.push(`tag=${nodeConfig.nodeName}`);
 
       // istanbul ignore next
-      if (
-        nodeConfig.wsHeaders &&
-        Object.keys(nodeConfig.wsHeaders).length > 1
-      ) {
+      if (nodeConfig.wsHeaders && Object.keys(nodeConfig.wsHeaders).length > 1) {
         logger.warn(
-          `Quantumult X 不支持自定义额外的 Header 字段，节点 ${nodeConfig.nodeName} 可能不可用`,
+          `Quantumult X 不支持自定义额外的 Header 字段，节点 ${nodeConfig.nodeName} 可能不可用`
         );
       }
 
@@ -129,17 +119,14 @@ function nodeListMapper(
       }
 
       // istanbul ignore next
-      if (
-        nodeConfig.wsHeaders &&
-        Object.keys(omit(nodeConfig.wsHeaders, ["host"])).length > 0
-      ) {
+      if (nodeConfig.wsHeaders && Object.keys(omit(nodeConfig.wsHeaders, ["host"])).length > 0) {
         logger.warn(
-          `Quantumult X 不支持自定义额外的 Header 字段，节点 ${nodeConfig.nodeName} 可能不可用`,
+          `Quantumult X 不支持自定义额外的 Header 字段，节点 ${nodeConfig.nodeName} 可能不可用`
         );
       }
 
       if (typeof nodeConfig.testUrl === "string") {
-        config.push(`server_check_url=${nodeConfig["testUrl"]}`);
+        config.push(`server_check_url=${nodeConfig.testUrl}`);
       }
 
       config.push(`tag=${nodeConfig.nodeName}`);
@@ -178,12 +165,12 @@ function nodeListMapper(
         config.push(
           "over-tls=true",
           `tls-verification=${nodeConfig.skipCertVerify !== true}`,
-          ...(nodeConfig.tls13 ? [`tls13=${nodeConfig.tls13}`] : []),
+          ...(nodeConfig.tls13 ? [`tls13=${nodeConfig.tls13}`] : [])
         );
       }
 
       if (typeof nodeConfig.testUrl === "string") {
-        config.push(`server_check_url=${nodeConfig["testUrl"]}`);
+        config.push(`server_check_url=${nodeConfig.testUrl}`);
       }
 
       config.push(`tag=${nodeConfig.nodeName}`);
@@ -224,7 +211,7 @@ function nodeListMapper(
 
         if (sni && hostHeader) {
           logger.warn(
-            `Quantumult X 不支持同时定义 sni 和 wsHeaders.host，配置以 sni 为准，节点 ${nodeConfig.nodeName} 可能不可用`,
+            `Quantumult X 不支持同时定义 sni 和 wsHeaders.host，配置以 sni 为准，节点 ${nodeConfig.nodeName} 可能不可用`
           );
         }
 
@@ -232,7 +219,7 @@ function nodeListMapper(
           // istanbul ignore next
           if (Object.keys(omit(nodeConfig.wsHeaders, ["host"])).length > 0) {
             logger.warn(
-              `Quantumult X 不支持自定义额外的 Header 字段，节点 ${nodeConfig.nodeName} 可能不可用`,
+              `Quantumult X 不支持自定义额外的 Header 字段，节点 ${nodeConfig.nodeName} 可能不可用`
             );
           }
         }
@@ -245,7 +232,7 @@ function nodeListMapper(
       }
 
       if (typeof nodeConfig.testUrl === "string") {
-        config.push(`server_check_url=${nodeConfig["testUrl"]}`);
+        config.push(`server_check_url=${nodeConfig.testUrl}`);
       }
 
       config.push(`tag=${nodeConfig.nodeName}`);
@@ -258,7 +245,7 @@ function nodeListMapper(
       logger.warn(
         `不支持为 QuantumultX 生成 ${(nodeConfig as any).type} 的节点，节点 ${
           (nodeConfig as any).nodeName
-        } 会被省略`,
+        } 会被省略`
       );
       return void 0;
   }

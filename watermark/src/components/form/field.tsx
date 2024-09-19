@@ -1,25 +1,20 @@
+import { Field, FieldControlProps, FieldProps } from "@fluentui/react-components";
+import { ComponentType, ReactNode, useCallback } from "react";
 import {
   ControllerRenderProps,
-  useController,
-  UseControllerProps,
-  FieldValues,
   FieldPath,
+  FieldValues,
+  UseControllerProps,
+  useController,
 } from "react-hook-form";
-import {
-  Field,
-  FieldControlProps,
-  FieldProps,
-} from "@fluentui/react-components";
-import { ReactNode, ComponentType, useCallback } from "react";
 
-export function createFieldComponent<
-  TFieldValues extends FieldValues = FieldValues,
->() {
+export function createFieldComponent<TFieldValues extends FieldValues = FieldValues>() {
   return HookField as typeof _HookField;
 
-  function _HookField<
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  >({ children, ...props }: HookFieldProps<TFieldValues, TName>) {
+  function _HookField<TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>({
+    children,
+    ...props
+  }: HookFieldProps<TFieldValues, TName>) {
     return <HookField {...props}>{children}</HookField>;
   }
 }
@@ -30,8 +25,7 @@ export interface HookFieldProps<
 > extends UseControllerProps<TFieldValues, TName>,
     Omit<FieldProps, "children" | "defaultValue"> {
   children: (
-    controlProps: FieldControlProps &
-      ControllerRenderProps<TFieldValues, TName>,
+    controlProps: FieldControlProps & ControllerRenderProps<TFieldValues, TName>
   ) => ReactNode;
 }
 
@@ -58,7 +52,7 @@ export function HookField<
 
   const onChange = useCallback(
     (e: any, data?: any) => field.onChange(data ? data.value : e),
-    [field.onChange],
+    [field.onChange]
   );
   return (
     <Field

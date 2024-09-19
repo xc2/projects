@@ -10,12 +10,9 @@ export interface ResolvedPagination {
 export function createPaginationQuery(defaultSize = 10, maxSize = 100) {
   return function paginationQuery(
     pagination?: PaginationParam,
-    total?: number,
+    total?: number
   ): ResolvedPagination {
-    const limit = Math.min(
-      Math.max(1, Number(pagination?.limit) || defaultSize),
-      maxSize,
-    );
+    const limit = Math.min(Math.max(1, Number(pagination?.limit) || defaultSize), maxSize);
     const cursor = Math.max(0, Number(pagination?.cursor) || 0);
     let next = limit + cursor;
 
@@ -29,5 +26,5 @@ export function createPaginationQuery(defaultSize = 10, maxSize = 100) {
 
 export type PaginationQueryFN = (
   pagination?: PaginationParam,
-  total?: number,
+  total?: number
 ) => ResolvedPagination;

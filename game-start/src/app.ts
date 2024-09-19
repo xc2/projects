@@ -1,15 +1,11 @@
-import { Hono } from "hono";
-import { CloudflareAccess, createOnUpdateAt, NodeService } from "./lib";
-import { migrations } from "./db/migrations";
-import { AuthMiddleware } from "./middlewares/auth";
-import {
-  getClashConfig,
-  getQuantumultXConfig,
-  getShadowRocketConfig,
-} from "./render";
-import { stringify } from "yaml";
-import { FullSchema, nodes } from "./db/schema";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
+import { Hono } from "hono";
+import { stringify } from "yaml";
+import { migrations } from "./db/migrations";
+import { FullSchema, nodes } from "./db/schema";
+import { CloudflareAccess, NodeService, createOnUpdateAt } from "./lib";
+import { AuthMiddleware } from "./middlewares/auth";
+import { getClashConfig, getQuantumultXConfig, getShadowRocketConfig } from "./render";
 
 declare global {
   interface Env {
@@ -73,10 +69,7 @@ app.post("/api/v1/nodes", async (c) => {
 });
 
 app.patch("/api/v1/nodes/:key", async (c) => {
-  const r = await c.env.Node.update(
-    c.req.param("key"),
-    await c.req.json<any>(),
-  );
+  const r = await c.env.Node.update(c.req.param("key"), await c.req.json<any>());
   return c.json(r);
 });
 

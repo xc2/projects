@@ -5,7 +5,7 @@ export function getFontSize(
   font: string,
   text: string,
   by: "width" | "height",
-  px: number,
+  px: number
 ) {
   const measure = (() => {
     const cache = new Map<number, number>();
@@ -19,9 +19,7 @@ export function getFontSize(
       let result: number;
       if (by === "width") result = m.width;
       else if (by === "height")
-        result = Math.abs(
-          m.actualBoundingBoxDescent - m.actualBoundingBoxAscent,
-        );
+        result = Math.abs(m.actualBoundingBoxDescent - m.actualBoundingBoxAscent);
 
       cache.set(size, result!);
       return result!;
@@ -54,13 +52,7 @@ export function getFontSize(
   }
 }
 
-export function getCanvasRect(
-  width: number,
-  height: number,
-  angle: number,
-  x = 0,
-  y = 0,
-) {
+export function getCanvasRect(width: number, height: number, angle: number, x = 0, y = 0) {
   const [x0, y0]: Point = [x, y];
   const origin: Rect = [
     [x0, y0],
@@ -70,10 +62,7 @@ export function getCanvasRect(
   ];
 
   const rect = origin.map<Point>(([x, y]) => {
-    return [
-      x * Math.cos(angle) - y * Math.sin(angle),
-      x * Math.sin(angle) + y * Math.cos(angle),
-    ];
+    return [x * Math.cos(angle) - y * Math.sin(angle), x * Math.sin(angle) + y * Math.cos(angle)];
   }) as Rect;
   const [lt, rt, rb, lb] = rect;
 
@@ -108,20 +97,14 @@ export function fillText(
   dx = 0,
   dy = 0,
   dw?: number,
-  dh?: number,
+  dh?: number
 ) {
   dw = dw || ctx.canvas.width;
   dh = dh || ctx.canvas.height;
 
   const m = ctx.measureText(text);
-  const textTop = Math.min(
-    m.actualBoundingBoxDescent,
-    m.actualBoundingBoxAscent,
-  );
-  const textBottom = Math.max(
-    m.actualBoundingBoxDescent,
-    m.actualBoundingBoxAscent,
-  );
+  const textTop = Math.min(m.actualBoundingBoxDescent, m.actualBoundingBoxAscent);
+  const textBottom = Math.max(m.actualBoundingBoxDescent, m.actualBoundingBoxAscent);
 
   const height = textBottom - textTop;
 
@@ -155,7 +138,7 @@ function getAvgBrightness(
   x: number,
   y: number,
   w: number,
-  h: number,
+  h: number
 ) {
   const imageData = ctx.getImageData(x, y, w, h);
   const total = imageData.data.reduce((total, curr) => total + curr, 0);
