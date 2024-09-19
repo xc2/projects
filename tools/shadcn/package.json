@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "shadcn-ui": "^0.5.0"
+    "shadcn-ui": "^0.9.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": []
   }
 }

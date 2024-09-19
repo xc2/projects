@@ -31,7 +31,7 @@ const ts =
  **/
 import type { MigrationMeta } from "drizzle-orm/migrator";
 
-// prettier-ignore
+// biome-ignore format: generated
 export const migrations: MigrationMeta[] = ${inspect(r)};
 `.trim() + "\n";
 

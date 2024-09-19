@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "wrangler": "^3.44.0"
+    "wrangler": "^3.78.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["workerd"]
   }
 }

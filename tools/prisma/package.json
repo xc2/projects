@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "prisma": "^5.7.1"
+    "prisma": "^5.19.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": []
   }
 }

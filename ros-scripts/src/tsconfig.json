@@ -10,5 +10,6 @@
     "moduleResolution": "node",
     "types": ["@cloudflare/workers-types"]
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": []
 }

@@ -1,5 +1,5 @@
-load("@npm//:defs.bzl", "npm_link_all_packages")
 load("@npm//:@biomejs/biome/package_json.bzl", biome_bin = "bin")
+load("@npm//:defs.bzl", "npm_link_all_packages")
 
 package(default_visibility = ["//visibility:public"])
 

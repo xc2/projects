@@ -6,7 +6,9 @@ def gendb(name, src, type = "sqlite", outdir = "migrations", data = [], orm_pack
         data = [orm_package] + [src] + data,
         chdir = "$$BUILD_WORKSPACE_DIRECTORY",
         args = [
-            "generate:{}".format(type),
+            "generate",
+            "--dialect",
+            type,
             "--schema",
             "$(execpath {})".format(src),
             "--out",
